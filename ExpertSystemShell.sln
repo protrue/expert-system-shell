@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Gui", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Core", "ExpertSystemShell.Core\ExpertSystemShell.Core.csproj", "{F230C8E0-04CF-40A6-AB6D-AFBDB226EEDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Model", "ExpertSystemShell.Model\ExpertSystemShell.Model.csproj", "{65026479-8A58-4CD5-BD49-CDD779A1668F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F230C8E0-04CF-40A6-AB6D-AFBDB226EEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F230C8E0-04CF-40A6-AB6D-AFBDB226EEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F230C8E0-04CF-40A6-AB6D-AFBDB226EEDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65026479-8A58-4CD5-BD49-CDD779A1668F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65026479-8A58-4CD5-BD49-CDD779A1668F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65026479-8A58-4CD5-BD49-CDD779A1668F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65026479-8A58-4CD5-BD49-CDD779A1668F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

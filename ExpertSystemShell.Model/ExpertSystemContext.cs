@@ -4,16 +4,16 @@ namespace ExpertSystemShell.Model
     using System.Data.Entity;
     using System.Linq;
 
-    public class Model1 : DbContext
+    public class ExpertSystemContext : DbContext
     {
-        // Your context has been configured to use a 'Model1' connection string from your application's 
+        // Your context has been configured to use a 'ExpertSystemContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
-        // 'ExpertSystemShell.Model.Model1' database on your LocalDb instance. 
+        // 'ExpertSystemShell.Model.ExpertSystemContext' database on your LocalDb instance. 
         // 
-        // If you wish to target a different database and/or database provider, modify the 'Model1' 
+        // If you wish to target a different database and/or database provider, modify the 'ExpertSystemContext' 
         // connection string in the application configuration file.
-        public Model1()
-            : base("name=Model1")
+        public ExpertSystemContext()
+            : base("name=ExpertSystemContext")
         {
         }
 
