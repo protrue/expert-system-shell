@@ -42,6 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkingMemory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpertSystemShell.Model\ExpertSystemShell.Model.csproj">
+      <Project>{65026479-8a58-4cd5-bd49-cdd779a1668f}</Project>
+      <Name>ExpertSystemShell.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
