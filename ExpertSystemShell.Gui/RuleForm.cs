@@ -7,21 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ExpertSystemShell.Core;
-using ExpertSystemShell.Model;
-using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Gui
 {
-    public partial class MainForm : Form
+    public partial class RuleForm : Form
     {
-        public KnowledgeBase KnowledgeBase { get; set; }
-
-        public MainForm()
+        public RuleForm()
         {
             InitializeComponent();
-            var form = new DomainForm();            
-            form.ShowDialog();
         }
     }
 }

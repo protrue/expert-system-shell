@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Model", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Tests", "ExpertSystemShell.Tests\ExpertSystemShell.Tests.csproj", "{B71B8452-C58B-4DAE-A594-7873C4E0D4AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Gui.Wpf", "ExpertSystemShell.Gui.Wpf\ExpertSystemShell.Gui.Wpf.csproj", "{2A200D84-AEA7-4E31-BD03-A4A205EE6481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertSystemShell.Tools", "ExpertSystemShell.Tools\ExpertSystemShell.Tools.csproj", "{A947480B-C13A-46D8-B018-AC4ACE07C4EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{B71B8452-C58B-4DAE-A594-7873C4E0D4AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B71B8452-C58B-4DAE-A594-7873C4E0D4AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B71B8452-C58B-4DAE-A594-7873C4E0D4AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A200D84-AEA7-4E31-BD03-A4A205EE6481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A200D84-AEA7-4E31-BD03-A4A205EE6481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A200D84-AEA7-4E31-BD03-A4A205EE6481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A200D84-AEA7-4E31-BD03-A4A205EE6481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A947480B-C13A-46D8-B018-AC4ACE07C4EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A947480B-C13A-46D8-B018-AC4ACE07C4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A947480B-C13A-46D8-B018-AC4ACE07C4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A947480B-C13A-46D8-B018-AC4ACE07C4EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

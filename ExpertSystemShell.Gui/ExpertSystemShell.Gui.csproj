@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DomainForm.Designer.cs">
+      <DependentUpon>DomainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleForm.Designer.cs">
+      <DependentUpon>RuleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VariableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VariableForm.Designer.cs">
+      <DependentUpon>VariableForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DomainForm.resx">
+      <DependentUpon>DomainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -66,6 +87,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RuleForm.resx">
+      <DependentUpon>RuleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VariableForm.resx">
+      <DependentUpon>VariableForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -78,6 +105,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpertSystemShell.Core\ExpertSystemShell.Core.csproj">
+      <Project>{f230c8e0-04cf-40a6-ab6d-afbdb226eeda}</Project>
+      <Name>ExpertSystemShell.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpertSystemShell.Model\ExpertSystemShell.Model.csproj">
+      <Project>{65026479-8a58-4cd5-bd49-cdd779a1668f}</Project>
+      <Name>ExpertSystemShell.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpertSystemShell.Tools\ExpertSystemShell.Tools.csproj">
+      <Project>{a947480b-c13a-46d8-b018-ac4ace07c4ec}</Project>
+      <Name>ExpertSystemShell.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

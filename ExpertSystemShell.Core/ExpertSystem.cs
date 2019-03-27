@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExpertSystemShell.Model
+namespace ExpertSystemShell.Core
 {
-    public class DomenValue
+    public class ExpertSystem
     {
+        public KnowledgeBase KnowledgeBase { get; set; }
     }
 }
