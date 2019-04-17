@@ -2,7 +2,8 @@
 
 namespace ExpertSystemShell.Tools
 {
-    public class IndexedNamedItem
+    [Serializable]
+    public class IndexedNamedItem : ICloneable
     {
         private string _name;
 
@@ -31,5 +32,26 @@ namespace ExpertSystemShell.Tools
         }
 
         public override string ToString() => Name;
+
+        public virtual object Clone()
+        {
+            return new IndexedNamedItem(this.Name);
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other == null)
+                return false;
+
+            if (!(other is IndexedNamedItem))
+                return false;
+
+            var otherCasted = (IndexedNamedItem) other;
+
+            if (this.Index == otherCasted.Index)
+                return true;
+
+            return false;
+        }
     }
 }

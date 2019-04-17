@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
 {
-    public class Fact
+    [Serializable]
+    public class Fact : ICloneable
     {
-        private string _value;
+        private IndexedNamedItem _value;
 
         public Variable Variable { get; set; }
-        public string Value
+        public IndexedNamedItem Value
         {
             get => _value;
             set
@@ -22,5 +24,23 @@ namespace ExpertSystemShell.Model
                 _value = value;
             }
         }
+
+        public Fact()
+        {
+
+        }
+
+        public Fact(Variable variable, IndexedNamedItem value)
+        {
+            Variable = variable;
+            Value = value;
+        }
+        
+        public object Clone()
+        {
+            return new Fact((Variable)Variable.Clone(), (IndexedNamedItem)Value.Clone());
+        }
+
+        public override string ToString() => $"{Variable} = {Value}";
     }
 }

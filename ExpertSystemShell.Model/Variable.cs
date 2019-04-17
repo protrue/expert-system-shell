@@ -7,7 +7,8 @@ using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
 {
-    public class Variable : IndexedNamedItem
+    [Serializable]
+    public class Variable : IndexedNamedItem, ICloneable
     {
         private string _question;
 
@@ -19,11 +20,16 @@ namespace ExpertSystemShell.Model
             set => _question = value;
         }
 
-        public Variable(string name, VariableKind variableKind, Domain domain, string question = null) : base(name)
+        public Variable(string name, VariableKind variableKind = VariableKind.Deductible, Domain domain = null, string question = null) : base(name)
         {
             VariableKind = variableKind;
             Domain = domain;
             Question = question;
+        }
+
+        public override object Clone()
+        {
+            return new Variable((string)Name.Clone(), this.VariableKind, (Domain)this.Domain.Clone(), (string)Question.Clone());
         }
     }
 }

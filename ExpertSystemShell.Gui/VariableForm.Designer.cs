@@ -29,132 +29,152 @@
         private void InitializeComponent()
         {
             this.groupBoxMain = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.buttonAddDomain = new System.Windows.Forms.Button();
+            this.richTextBoxQuestion = new System.Windows.Forms.RichTextBox();
+            this.comboBoxDomain = new System.Windows.Forms.ComboBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.groupBoxVariableKind = new System.Windows.Forms.GroupBox();
+            this.radioButtonDeductibleRequested = new System.Windows.Forms.RadioButton();
+            this.radioButtonRequested = new System.Windows.Forms.RadioButton();
+            this.radioButtonDeductible = new System.Windows.Forms.RadioButton();
+            this.labelQuestion = new System.Windows.Forms.Label();
+            this.labelDomain = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOk = new System.Windows.Forms.Button();
             this.groupBoxMain.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxVariableKind.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxMain
             // 
-            this.groupBoxMain.Controls.Add(this.richTextBox1);
-            this.groupBoxMain.Controls.Add(this.comboBox1);
-            this.groupBoxMain.Controls.Add(this.textBox1);
-            this.groupBoxMain.Controls.Add(this.groupBox1);
-            this.groupBoxMain.Controls.Add(this.label3);
-            this.groupBoxMain.Controls.Add(this.label2);
-            this.groupBoxMain.Controls.Add(this.label1);
+            this.groupBoxMain.Controls.Add(this.buttonAddDomain);
+            this.groupBoxMain.Controls.Add(this.richTextBoxQuestion);
+            this.groupBoxMain.Controls.Add(this.comboBoxDomain);
+            this.groupBoxMain.Controls.Add(this.textBoxName);
+            this.groupBoxMain.Controls.Add(this.groupBoxVariableKind);
+            this.groupBoxMain.Controls.Add(this.labelQuestion);
+            this.groupBoxMain.Controls.Add(this.labelDomain);
+            this.groupBoxMain.Controls.Add(this.labelName);
             this.groupBoxMain.Location = new System.Drawing.Point(28, 12);
             this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Size = new System.Drawing.Size(584, 545);
+            this.groupBoxMain.Size = new System.Drawing.Size(636, 545);
             this.groupBoxMain.TabIndex = 0;
             this.groupBoxMain.TabStop = false;
             this.groupBoxMain.Text = "Редактирование переменной";
             // 
-            // richTextBox1
+            // buttonAddDomain
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(47, 409);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(511, 96);
-            this.richTextBox1.TabIndex = 5;
-            this.richTextBox1.Text = "";
+            this.buttonAddDomain.Location = new System.Drawing.Point(577, 133);
+            this.buttonAddDomain.Name = "buttonAddDomain";
+            this.buttonAddDomain.Size = new System.Drawing.Size(33, 33);
+            this.buttonAddDomain.TabIndex = 6;
+            this.buttonAddDomain.Text = "+";
+            this.buttonAddDomain.UseVisualStyleBackColor = true;
+            this.buttonAddDomain.Click += new System.EventHandler(this.ButtonAddDomainClick);
             // 
-            // comboBox1
+            // richTextBoxQuestion
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(220, 133);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(338, 33);
-            this.comboBox1.TabIndex = 1;
+            this.richTextBoxQuestion.Location = new System.Drawing.Point(47, 409);
+            this.richTextBoxQuestion.Name = "richTextBoxQuestion";
+            this.richTextBoxQuestion.Size = new System.Drawing.Size(511, 96);
+            this.richTextBoxQuestion.TabIndex = 5;
+            this.richTextBoxQuestion.Text = "";
+            this.richTextBoxQuestion.Leave += new System.EventHandler(this.RichTextBoxQuestionLeave);
             // 
-            // textBox1
+            // comboBoxDomain
             // 
-            this.textBox1.Location = new System.Drawing.Point(220, 55);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(338, 31);
-            this.textBox1.TabIndex = 4;
+            this.comboBoxDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDomain.FormattingEnabled = true;
+            this.comboBoxDomain.Location = new System.Drawing.Point(220, 133);
+            this.comboBoxDomain.Name = "comboBoxDomain";
+            this.comboBoxDomain.Size = new System.Drawing.Size(338, 33);
+            this.comboBoxDomain.TabIndex = 1;
+            this.comboBoxDomain.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDomainSelectedIndexChanged);
             // 
-            // groupBox1
+            // textBoxName
             // 
-            this.groupBox1.Controls.Add(this.radioButton3);
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(36, 195);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(522, 158);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Тип переменной";
+            this.textBoxName.Location = new System.Drawing.Point(220, 55);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(338, 31);
+            this.textBoxName.TabIndex = 4;
+            this.textBoxName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxNameKeyDown);
+            this.textBoxName.Leave += new System.EventHandler(this.TextBoxNameLeave);
             // 
-            // radioButton3
+            // groupBoxVariableKind
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(18, 115);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(314, 29);
-            this.radioButton3.TabIndex = 3;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Выводимо-запрашиваемая";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.groupBoxVariableKind.Controls.Add(this.radioButtonDeductibleRequested);
+            this.groupBoxVariableKind.Controls.Add(this.radioButtonRequested);
+            this.groupBoxVariableKind.Controls.Add(this.radioButtonDeductible);
+            this.groupBoxVariableKind.Location = new System.Drawing.Point(36, 195);
+            this.groupBoxVariableKind.Name = "groupBoxVariableKind";
+            this.groupBoxVariableKind.Size = new System.Drawing.Size(522, 158);
+            this.groupBoxVariableKind.TabIndex = 3;
+            this.groupBoxVariableKind.TabStop = false;
+            this.groupBoxVariableKind.Text = "Тип переменной";
             // 
-            // radioButton2
+            // radioButtonDeductibleRequested
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(18, 79);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(206, 29);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Запрашиваемая";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButtonDeductibleRequested.AutoSize = true;
+            this.radioButtonDeductibleRequested.Location = new System.Drawing.Point(18, 115);
+            this.radioButtonDeductibleRequested.Name = "radioButtonDeductibleRequested";
+            this.radioButtonDeductibleRequested.Size = new System.Drawing.Size(314, 29);
+            this.radioButtonDeductibleRequested.TabIndex = 3;
+            this.radioButtonDeductibleRequested.TabStop = true;
+            this.radioButtonDeductibleRequested.Text = "Выводимо-запрашиваемая";
+            this.radioButtonDeductibleRequested.UseVisualStyleBackColor = true;
+            this.radioButtonDeductibleRequested.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
-            // radioButton1
+            // radioButtonRequested
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(18, 43);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(157, 29);
-            this.radioButton1.TabIndex = 1;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Выводимая";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButtonRequested.AutoSize = true;
+            this.radioButtonRequested.Location = new System.Drawing.Point(18, 79);
+            this.radioButtonRequested.Name = "radioButtonRequested";
+            this.radioButtonRequested.Size = new System.Drawing.Size(206, 29);
+            this.radioButtonRequested.TabIndex = 2;
+            this.radioButtonRequested.TabStop = true;
+            this.radioButtonRequested.Text = "Запрашиваемая";
+            this.radioButtonRequested.UseVisualStyleBackColor = true;
+            this.radioButtonRequested.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
-            // label3
+            // radioButtonDeductible
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 372);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(157, 25);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Текст вопроса";
+            this.radioButtonDeductible.AutoSize = true;
+            this.radioButtonDeductible.Location = new System.Drawing.Point(18, 43);
+            this.radioButtonDeductible.Name = "radioButtonDeductible";
+            this.radioButtonDeductible.Size = new System.Drawing.Size(157, 29);
+            this.radioButtonDeductible.TabIndex = 1;
+            this.radioButtonDeductible.TabStop = true;
+            this.radioButtonDeductible.Text = "Выводимая";
+            this.radioButtonDeductible.UseVisualStyleBackColor = true;
+            this.radioButtonDeductible.CheckedChanged += new System.EventHandler(this.RadioButtonCheckedChanged);
             // 
-            // label2
+            // labelQuestion
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 136);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 25);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Домен";
+            this.labelQuestion.AutoSize = true;
+            this.labelQuestion.Location = new System.Drawing.Point(42, 372);
+            this.labelQuestion.Name = "labelQuestion";
+            this.labelQuestion.Size = new System.Drawing.Size(157, 25);
+            this.labelQuestion.TabIndex = 2;
+            this.labelQuestion.Text = "Текст вопроса";
             // 
-            // label1
+            // labelDomain
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(42, 58);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 25);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Название";
+            this.labelDomain.AutoSize = true;
+            this.labelDomain.Location = new System.Drawing.Point(42, 136);
+            this.labelDomain.Name = "labelDomain";
+            this.labelDomain.Size = new System.Drawing.Size(79, 25);
+            this.labelDomain.TabIndex = 1;
+            this.labelDomain.Text = "Домен";
+            // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(42, 58);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(109, 25);
+            this.labelName.TabIndex = 0;
+            this.labelName.Text = "Название";
             // 
             // buttonCancel
             // 
@@ -165,6 +185,7 @@
             this.buttonCancel.TabIndex = 11;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancelClick);
             // 
             // buttonOk
             // 
@@ -175,24 +196,26 @@
             this.buttonOk.TabIndex = 10;
             this.buttonOk.Text = "ОК";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.ButtonOkClick);
             // 
             // VariableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 662);
+            this.ClientSize = new System.Drawing.Size(691, 662);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.groupBoxMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "VariableForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование переменной";
-            this.Load += new System.EventHandler(this.VariableForm_Load);
+            this.Load += new System.EventHandler(this.VariableFormLoad);
             this.groupBoxMain.ResumeLayout(false);
             this.groupBoxMain.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxVariableKind.ResumeLayout(false);
+            this.groupBoxVariableKind.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -200,17 +223,18 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBoxMain;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Label labelQuestion;
+        private System.Windows.Forms.Label labelDomain;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.ComboBox comboBoxDomain;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.GroupBox groupBoxVariableKind;
+        private System.Windows.Forms.RadioButton radioButtonDeductible;
+        private System.Windows.Forms.RichTextBox richTextBoxQuestion;
+        private System.Windows.Forms.RadioButton radioButtonDeductibleRequested;
+        private System.Windows.Forms.RadioButton radioButtonRequested;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOk;
+        private System.Windows.Forms.Button buttonAddDomain;
     }
 }

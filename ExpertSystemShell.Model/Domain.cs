@@ -7,22 +7,32 @@ using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
 {
-    public class Domain : IndexedNamedItem
+    [Serializable]
+    public class Domain : IndexedNamedItem, ICloneable
     {
         public IndexedList<IndexedNamedItem> Values { get; }
 
-        public Domain(string name) : base(name)
+        public Domain(string name, IndexedList<IndexedNamedItem> values = null) : base(name)
         {
-            Values = new IndexedList<IndexedNamedItem>();
+            if (values == null)
+                Values = new IndexedList<IndexedNamedItem>();
+            else
+                Values = values;
         }
 
         public Domain(string name, IEnumerable<string> values) : base(name)
         {
             Values = new IndexedList<IndexedNamedItem>();
-            foreach (var value in values)
-                Values.Add(new IndexedNamedItem(value));
+            if (values != null)
+                foreach (var value in values)
+                    Values.Add(new IndexedNamedItem(value));
         }
 
         public void Add(string value) => Values.Add(new IndexedNamedItem(value));
+
+        public override object Clone()
+        {
+            return new Domain(Name, (IndexedList<IndexedNamedItem>)Values.Clone());
+        }
     }
 }

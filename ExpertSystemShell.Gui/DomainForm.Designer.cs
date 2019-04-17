@@ -69,7 +69,12 @@
             this.listBoxValues.Name = "listBoxValues";
             this.listBoxValues.Size = new System.Drawing.Size(448, 204);
             this.listBoxValues.TabIndex = 2;
-            this.listBoxValues.SelectedIndexChanged += new System.EventHandler(this.listBoxValues_SelectedIndexChanged);
+            this.listBoxValues.SelectedIndexChanged += new System.EventHandler(this.ListBoxValuesSelectedIndexChanged);
+            this.listBoxValues.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragDrop);
+            this.listBoxValues.DragEnter += new System.Windows.Forms.DragEventHandler(this.listBoxValues_DragEnter);
+            this.listBoxValues.DragOver += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragOver);
+            this.listBoxValues.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListBoxValuesMouseDown);
+            this.listBoxValues.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxValues_MouseMove);
             // 
             // textBoxName
             // 
@@ -77,7 +82,8 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(296, 31);
             this.textBoxName.TabIndex = 3;
-            this.textBoxName.Leave += new System.EventHandler(this.textBoxName_Leave);
+            this.textBoxName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxNameKeyDown);
+            this.textBoxName.Leave += new System.EventHandler(this.TextBoxNameLeave);
             // 
             // textBoxValue
             // 
@@ -85,6 +91,7 @@
             this.textBoxValue.Name = "textBoxValue";
             this.textBoxValue.Size = new System.Drawing.Size(454, 31);
             this.textBoxValue.TabIndex = 4;
+            this.textBoxValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxValueKeyDown);
             // 
             // buttonAdd
             // 
@@ -94,7 +101,7 @@
             this.buttonAdd.TabIndex = 5;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.buttonAdd.Click += new System.EventHandler(this.ButtonAddClick);
             // 
             // buttonChange
             // 
@@ -104,7 +111,7 @@
             this.buttonChange.TabIndex = 6;
             this.buttonChange.Text = "Изменить";
             this.buttonChange.UseVisualStyleBackColor = true;
-            this.buttonChange.Click += new System.EventHandler(this.buttonChange_Click);
+            this.buttonChange.Click += new System.EventHandler(this.ButtonChangeClick);
             // 
             // buttonDelete
             // 
@@ -114,7 +121,7 @@
             this.buttonDelete.TabIndex = 7;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.UseVisualStyleBackColor = true;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            this.buttonDelete.Click += new System.EventHandler(this.ButtonDeleteClick);
             // 
             // buttonOk
             // 
@@ -125,7 +132,7 @@
             this.buttonOk.TabIndex = 8;
             this.buttonOk.Text = "ОК";
             this.buttonOk.UseVisualStyleBackColor = true;
-            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
+            this.buttonOk.Click += new System.EventHandler(this.ButtonOkClick);
             // 
             // buttonCancel
             // 
@@ -136,7 +143,7 @@
             this.buttonCancel.TabIndex = 9;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancelClick);
             // 
             // groupBox
             // 
@@ -168,7 +175,7 @@
             this.Name = "DomainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Редактирование домена";
-            this.Load += new System.EventHandler(this.DomainForm_Load);
+            this.Load += new System.EventHandler(this.DomainFormLoad);
             this.groupBox.ResumeLayout(false);
             this.groupBox.PerformLayout();
             this.ResumeLayout(false);

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,8 +16,13 @@ namespace ExpertSystemShell.Gui
 {
     public partial class DomainForm : Form
     {
-        public IndexedList<Domain> AllDomains { get; set; }
-        public Domain DomainToEdit { get; set; }
+        public IndexedList<Domain> Domains { get; set; }
+        public Domain Domain { get; set; }
+
+        private Domain _domain;
+        private object _listBoxValueDraggedItem;
+
+        private bool _setNameSuccess = false;
 
         public DomainForm()
         {
@@ -44,45 +50,37 @@ namespace ExpertSystemShell.Gui
             return isSuccess;
         }
 
-        private void DomainForm_Load(object sender, EventArgs e)
+        private void DomainFormLoad(object sender, EventArgs e)
         {
-            if (AllDomains == null)
-                AllDomains = new IndexedList<Domain>();
+            if (Domains == null)
+                Domains = new IndexedList<Domain>();
 
-            if (DomainToEdit == null)
-                DomainToEdit = new Domain($"Домен {AllDomains.Count + 1}");
+            if (Domain != null)
+                _domain = (Domain)Domain.Clone();
+            else
+                _domain = new Domain($"Домен {Domains.Count + 1}");
 
-            textBoxName.Text = DomainToEdit.Name;
-            foreach (var item in DomainToEdit.Values)
+            textBoxName.Text = _domain.Name;
+            textBoxName.Select();
+            textBoxName.Focus();
+
+            foreach (var item in _domain.Values)
                 listBoxValues.Items.Add(item);
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private void ButtonAddClick(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    var domainValue = new IndexedNamedItem(textBoxValue.Text);
-            //    DomainToEdit.Values.Add(domainValue);
-            //    listBoxValues.Items.Add(domainValue);
-            //}
-            //catch (ArgumentOutOfRangeException argumentOutOfRangeException)
-            //{
-            //    MessageBox.Show(argumentOutOfRangeException.Message);
-            //}
-            //catch (ArgumentException argumentException)
-            //{
-            //    MessageBox.Show(argumentException.Message);
-            //}
-
             TrySetIndexedNamedItem(() =>
             {
                 var domainValue = new IndexedNamedItem(textBoxValue.Text);
-                DomainToEdit.Values.Add(domainValue);
+                _domain.Values.Add(domainValue);
                 listBoxValues.Items.Add(domainValue);
+                listBoxValues.SelectedIndex = -1;
+                textBoxValue.Text = string.Empty;
             });
         }
 
-        private void buttonChange_Click(object sender, EventArgs e)
+        private void ButtonChangeClick(object sender, EventArgs e)
         {
             var selectedIndex = listBoxValues.SelectedIndex;
             if (selectedIndex < 0)
@@ -90,73 +88,135 @@ namespace ExpertSystemShell.Gui
 
             TrySetIndexedNamedItem(() =>
             {
-                DomainToEdit.Values[selectedIndex].Name = textBoxValue.Text;
-                listBoxValues.Items[selectedIndex] = DomainToEdit.Values[selectedIndex];
+                _domain.Values[selectedIndex].Name = textBoxValue.Text;
+                listBoxValues.Items[selectedIndex] = _domain.Values[selectedIndex];
             });
-
-            //try
-            //{
-            //    DomainToEdit.Values[selectedIndex].Name = textBoxValue.Text;
-            //    listBoxValues.Items[selectedIndex] = DomainToEdit.Values[selectedIndex];
-            //}
-            //catch (ArgumentOutOfRangeException argumentOutOfRangeException)
-            //{
-            //    MessageBox.Show(argumentOutOfRangeException.Message);
-            //}
-            //catch (ArgumentException argumentException)
-            //{
-            //    MessageBox.Show(argumentException.Message);
-            //}
         }
 
-        private void buttonDelete_Click(object sender, EventArgs e)
+        private void ButtonDeleteClick(object sender, EventArgs e)
         {
             var selectedIndex = listBoxValues.SelectedIndex;
-            DomainToEdit.Values.Delete(selectedIndex);
+            Domain.Values.Delete(selectedIndex);
             listBoxValues.Items.RemoveAt(selectedIndex);
         }
 
-        private void buttonOk_Click(object sender, EventArgs e)
+        private void ButtonOkClick(object sender, EventArgs e)
         {
-            if (AllDomains.Contains(DomainToEdit))
-                return;
-
-            try
+            if (_domain.Values.Count == 0)
             {
-                AllDomains.Add(DomainToEdit);
+                this.DialogResult = DialogResult.None;
+                MessageBox.Show("Домен должен иметь хотя бы одно значение");
+                textBoxValue.Select();
+                textBoxValue.Focus();
             }
-            catch (Exception exception)
+
+            if (Domains.Contains(_domain) && Domain?.Index != _domain.Index)
             {
-                MessageBox.Show(exception.Message);
+                this.DialogResult = DialogResult.None;
+                MessageBox.Show("Домен с таким именем уже есть");
+                textBoxName.Select();
+                textBoxName.Focus();
+            }
+            else
+            {
+                Domain = _domain;
             }
         }
 
-        private void listBoxValues_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBoxValuesSelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBoxValues.SelectedIndex < 0)
-                return;
-
-            textBoxValue.Text = listBoxValues.SelectedItem.ToString();
+            textBoxValue.Text =
+                listBoxValues.SelectedIndex >= 0
+                    ? listBoxValues.SelectedItem.ToString()
+                    : string.Empty;
+            buttonChange.Enabled = listBoxValues.SelectedIndex >= 0;
+            buttonDelete.Enabled = listBoxValues.SelectedIndex >= 0;
         }
 
-        private void textBoxName_Leave(object sender, EventArgs e)
+        private void TextBoxNameLeave(object sender, EventArgs e)
         {
             try
             {
-                DomainToEdit.Name = textBoxName.Text;
+                _domain.Name = textBoxName.Text;
+                _setNameSuccess = true;
             }
             catch (Exception exception)
             {
-                textBoxName.Text = DomainToEdit.Name;
+                _setNameSuccess = false;
+                textBoxName.Text = _domain.Name;
                 textBoxName.Select();
                 textBoxName.Focus();
                 MessageBox.Show(exception.Message);
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancelClick(object sender, EventArgs e)
         {
 
+        }
+
+        private void ListBoxValuesMouseDown(object sender, MouseEventArgs e)
+        {
+            //listBoxValues.SelectedIndex = listBoxValues.IndexFromPoint(e.X, e.Y);
+
+            //if (this.listBoxValues.SelectedItem == null) return;
+            //this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
+        }
+
+        private void ListBoxValuesDragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void ListBoxValuesDragDrop(object sender, DragEventArgs e)
+        {
+            Point point = listBoxValues.PointToClient(new Point(e.X, e.Y));
+            int insertIndex = this.listBoxValues.IndexFromPoint(point);
+            if (insertIndex < 0) insertIndex = this.listBoxValues.Items.Count - 1;
+            if (insertIndex == listBoxValues.SelectedIndex) return;
+            _domain.Values.Swap(listBoxValues.SelectedIndex, insertIndex);
+            object data = e.Data.GetData(typeof(IndexedNamedItem));
+            listBoxValues.Items.Remove(data);
+            listBoxValues.Items.Insert(insertIndex, data);
+            listBoxValues.SelectedIndex = insertIndex;
+        }
+
+        private void TextBoxValueKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                ButtonAddClick(this, EventArgs.Empty);
+        }
+
+        private void TextBoxNameKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                textBoxValue.Focus();
+
+                if (!_setNameSuccess)
+                {
+                    textBoxName.Select();
+                    textBoxName.Focus();
+                    return;
+                }
+
+                textBoxValue.Select();
+            }
+        }
+
+        private void listBoxValues_DragEnter(object sender, DragEventArgs e)
+        {
+            //if (this.listBoxValues.SelectedItem == null) return;
+            //this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
+        }
+
+        private void listBoxValues_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.listBoxValues.SelectedItem == null) return;
+                this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
+            }
         }
     }
 }

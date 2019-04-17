@@ -7,15 +7,31 @@ using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
 {
-    public class Rule : IndexedNamedItem
+    [Serializable]
+    public class Rule : IndexedNamedItem, ICloneable
     {
         public string Reason { get; set; }
-        public List<Fact> Premises { get; set; }
-        public List<Fact> Conclusions { get; set; }
+        public List<Fact> Premise { get; set; }
+        public List<Fact> Conclusion { get; set; }
 
-        public Rule(string name, string reason) : base(name)
+        public Rule(string name, IEnumerable<Fact> premise = null, IEnumerable<Fact> conclusion = null, string reason = null) : base(name)
         {
+            if (premise != null)
+                Premise = new List<Fact>(premise);
+            else
+                Premise = new List<Fact>();
+
+            if (conclusion != null)
+                Conclusion = new List<Fact>(conclusion);
+            else
+                Conclusion = new List<Fact>();
+
             Reason = reason;
+        }
+
+        public override object Clone()
+        {
+            return new Rule((string)Name.Clone(), new List<Fact>(Premise), new List<Fact>(Conclusion), (string)Reason?.Clone());
         }
     }
 }

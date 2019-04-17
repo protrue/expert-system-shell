@@ -52,6 +52,10 @@
       <Project>{65026479-8a58-4cd5-bd49-cdd779a1668f}</Project>
       <Name>ExpertSystemShell.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpertSystemShell.Tools\ExpertSystemShell.Tools.csproj">
+      <Project>{a947480b-c13a-46d8-b018-ac4ace07c4ec}</Project>
+      <Name>ExpertSystemShell.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
