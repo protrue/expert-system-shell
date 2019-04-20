@@ -42,7 +42,10 @@ namespace ExpertSystemShell.Gui
                     comboBoxValue.Items.Add(domainValue);
                 }
 
-                _fact = (Fact) Fact.Clone();
+                //_fact = (Fact) Fact.Clone();
+                _fact = new Fact();
+                _fact.Variable = Fact.Variable;
+                _fact.Value = Fact.Value;
                 comboBoxVariable.SelectedItem = Fact.Variable;
                 comboBoxValue.SelectedItem = Fact.Value;
             }

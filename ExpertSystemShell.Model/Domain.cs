@@ -10,7 +10,7 @@ namespace ExpertSystemShell.Model
     [Serializable]
     public class Domain : IndexedNamedItem, ICloneable
     {
-        public IndexedList<IndexedNamedItem> Values { get; }
+        public IndexedList<IndexedNamedItem> Values { get; set; }
 
         public Domain(string name, IndexedList<IndexedNamedItem> values = null) : base(name)
         {

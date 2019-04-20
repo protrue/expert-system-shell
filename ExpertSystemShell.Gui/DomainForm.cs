@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -119,7 +120,8 @@ namespace ExpertSystemShell.Gui
             }
             else
             {
-                Domain = _domain;
+                Domain.Name = _domain.Name;
+                Domain.Values = _domain.Values;
             }
         }
 

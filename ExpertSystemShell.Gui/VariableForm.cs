@@ -37,7 +37,13 @@ namespace ExpertSystemShell.Gui
                 Variables = new IndexedList<Variable>();
 
             if (Variable != null)
-                _variable = (Variable)Variable.Clone();
+            {
+                _variable = new Variable(_variable.Name);
+                _variable.Name = Variable.Name;
+                _variable.Domain = Variable.Domain;
+                _variable.VariableKind = Variable.VariableKind;
+                _variable.Question = Variable.Question;
+            }
             else
             {
                 _variable = new Variable($"Переменная {Variables.Count + 1}", VariableKind.Deductible);
@@ -70,7 +76,9 @@ namespace ExpertSystemShell.Gui
             }
             else
             {
-                Variable = new Variable(_variable.Name);
+                if (Variable == null)
+                    Variable = new Variable(_variable.Name);
+
                 Variable.Domain = _variable.Domain;
                 Variable.VariableKind = _variable.VariableKind;
                 Variable.Question = _variable.Question;

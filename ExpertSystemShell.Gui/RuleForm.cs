@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -37,7 +38,14 @@ namespace ExpertSystemShell.Gui
                 Rules = new IndexedList<Rule>();
 
             if (Rule != null)
-                _rule = (Model.Rule)Rule.Clone();
+            {
+                //_rule = (Model.Rule) Rule.Clone();
+                _rule = new Rule(Rule.Name);
+                _rule.Name = Rule.Name;
+                _rule.Premise = Rule.Premise;
+                _rule.Conclusion = Rule.Conclusion;
+                _rule.Reason = Rule.Reason;
+            }
             else
             {
                 _rule = new Model.Rule($"Правило {Rules.Count + 1}");
@@ -92,7 +100,10 @@ namespace ExpertSystemShell.Gui
                 textBoxName.Select();
                 return;
             }
-            Rule = new Rule(_rule.Name);
+
+            if (Rule == null)
+                Rule = new Rule(_rule.Name);
+
             Rule.Premise = _rule.Premise;
             Rule.Conclusion = _rule.Conclusion;
             Rule.Reason = _rule.Reason;
