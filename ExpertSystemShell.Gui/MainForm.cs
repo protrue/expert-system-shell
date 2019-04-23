@@ -71,48 +71,48 @@ namespace ExpertSystemShell.Gui
         {
             listView.Items.Clear();
 
-            if (radioButtonDomains.Checked)
+            if(radioButtonDomains.Checked)
             {
-                foreach (var domain in KnowledgeBase.Domains)
+                foreach(var domain in KnowledgeBase.Domains)
                 {
                     listView.Items.Add(CreateListViewItem(domain));
                 }
             }
             else
-            if (radioButtonVariables.Checked)
+            if(radioButtonVariables.Checked)
             {
-                foreach (var variable in KnowledgeBase.Variables)
+                foreach(var variable in KnowledgeBase.Variables)
                 {
                     listView.Items.Add(CreateListViewItem(variable));
                 }
             }
             else
-            if (radioButtonRules.Checked)
+            if(radioButtonRules.Checked)
             {
-                foreach (var rule in KnowledgeBase.Rules)
+                foreach(var rule in KnowledgeBase.Rules)
                 {
                     listView.Items.Add(CreateListViewItem(rule));
                 }
             }
 
-            if (listView.Items.Count > 0)
-            listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            if(listView.Items.Count > 0)
+                listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             else
                 listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                
+
         }
 
         private void ButtonAddClick(object sender, EventArgs e)
         {
-            if (radioButtonDomains.Checked)
+            if(radioButtonDomains.Checked)
             {
                 var domainForm = new DomainForm();
                 domainForm.Domains = KnowledgeBase.Domains;
                 var dialogResult = domainForm.ShowDialog();
-                if (dialogResult != DialogResult.OK)
+                if(dialogResult != DialogResult.OK)
                     return;
 
-                if (listView.SelectedIndices.Count > 0)
+                if(listView.SelectedIndices.Count > 0)
                 {
                     KnowledgeBase.Domains.Insert(listView.SelectedIndices[0], domainForm.Domain);
                     listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(domainForm.Domain));
@@ -125,16 +125,16 @@ namespace ExpertSystemShell.Gui
                 }
             }
 
-            if (radioButtonVariables.Checked)
+            if(radioButtonVariables.Checked)
             {
                 var variableForm = new VariableForm();
                 variableForm.Domains = KnowledgeBase.Domains;
                 variableForm.Variables = KnowledgeBase.Variables;
                 var dialogResult = variableForm.ShowDialog();
-                if (dialogResult != DialogResult.OK)
+                if(dialogResult != DialogResult.OK)
                     return;
 
-                if (listView.SelectedIndices.Count > 0)
+                if(listView.SelectedIndices.Count > 0)
                 {
                     KnowledgeBase.Variables.Insert(listView.SelectedIndices[0], variableForm.Variable);
                     listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(variableForm.Variable));
@@ -147,17 +147,17 @@ namespace ExpertSystemShell.Gui
                 }
             }
 
-            if (radioButtonRules.Checked)
+            if(radioButtonRules.Checked)
             {
                 var ruleForm = new RuleForm();
                 ruleForm.Rules = KnowledgeBase.Rules;
                 ruleForm.Variables = KnowledgeBase.Variables;
                 ruleForm.Domains = KnowledgeBase.Domains;
                 var dialogResult = ruleForm.ShowDialog();
-                if (dialogResult != DialogResult.OK)
+                if(dialogResult != DialogResult.OK)
                     return;
 
-                if (listView.SelectedIndices.Count > 0)
+                if(listView.SelectedIndices.Count > 0)
                 {
                     KnowledgeBase.Rules.Insert(listView.SelectedIndices[0], ruleForm.Rule);
                     listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(ruleForm.Rule));
@@ -173,7 +173,7 @@ namespace ExpertSystemShell.Gui
 
         private void ButtonEditClick(object sender, EventArgs e)
         {
-            if (radioButtonDomains.Checked)
+            if(radioButtonDomains.Checked)
             {
                 var domainForm = new DomainForm();
                 domainForm.Domains = KnowledgeBase.Domains;
@@ -183,7 +183,7 @@ namespace ExpertSystemShell.Gui
                 listView.Items[listView.SelectedIndices[0]] = CreateListViewItem(domainForm.Domain);
             }
 
-            if (radioButtonVariables.Checked)
+            if(radioButtonVariables.Checked)
             {
                 var variableForm = new VariableForm();
                 variableForm.Variables = KnowledgeBase.Variables;
@@ -194,7 +194,7 @@ namespace ExpertSystemShell.Gui
                 listView.Items[listView.SelectedIndices[0]] = CreateListViewItem(variableForm.Variable);
             }
 
-            if (radioButtonRules.Checked)
+            if(radioButtonRules.Checked)
             {
                 var ruleForm = new RuleForm();
                 ruleForm.Rules = KnowledgeBase.Rules;
@@ -211,19 +211,19 @@ namespace ExpertSystemShell.Gui
         {
             var indicesToDelete = listView.SelectedItems.Cast<int>().ToArray();
 
-            foreach (var indexToDelete in indicesToDelete)
+            foreach(var indexToDelete in indicesToDelete)
             {
-                if (radioButtonDomains.Checked)
+                if(radioButtonDomains.Checked)
                 {
                     KnowledgeBase.Domains.Delete(indexToDelete);
                 }
 
-                if (radioButtonVariables.Checked)
+                if(radioButtonVariables.Checked)
                 {
                     KnowledgeBase.Variables.Delete(indexToDelete);
                 }
 
-                if (radioButtonRules.Checked)
+                if(radioButtonRules.Checked)
                 {
                     KnowledgeBase.Rules.Delete(indexToDelete);
                 }
@@ -231,7 +231,7 @@ namespace ExpertSystemShell.Gui
                 listView.Items.RemoveAt(indexToDelete);
             }
 
-            if (listView.Items.Count > 0)
+            if(listView.Items.Count > 0)
             {
                 listView.SelectedIndices.Clear();
                 listView.SelectedIndices.Add(indicesToDelete[0] - 1 >= 0 ? indicesToDelete[0] - 1 : 0);
@@ -262,17 +262,17 @@ namespace ExpertSystemShell.Gui
 
         private void SetListViewColumns()
         {
-            if (radioButtonDomains.Checked)
+            if(radioButtonDomains.Checked)
             {
                 SetListViewColumnsForDomains();
             }
 
-            if (radioButtonVariables.Checked)
+            if(radioButtonVariables.Checked)
             {
                 SetListViewColumnsForVariables();
             }
 
-            if (radioButtonRules.Checked)
+            if(radioButtonRules.Checked)
             {
                 SetListViewColumnsForRules();
             }
@@ -315,25 +315,21 @@ namespace ExpertSystemShell.Gui
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            if (_currentPath == null)
+            if(_currentPath == null)
             {
                 var dialogResult = saveFileDialog.ShowDialog();
-                if (dialogResult == DialogResult.OK)
+                if(dialogResult == DialogResult.OK)
                 {
                     _currentPath = saveFileDialog.FileName;
+                    SaveKnowledgeBase(_currentPath);
                 }
-            }
-
-            if (_currentPath != null)
-            {
-                SaveKnowledgeBase(_currentPath);
             }
         }
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
             var dialogResult = openFileDialog.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            if(dialogResult == DialogResult.OK)
             {
                 _currentPath = openFileDialog.FileName;
                 LoadKnowledgeBase(_currentPath);
@@ -345,15 +341,15 @@ namespace ExpertSystemShell.Gui
         {
             var dialogResult = MessageBox.Show("Сохранить изменения?", string.Empty, MessageBoxButtons.YesNoCancel);
 
-            if (dialogResult == DialogResult.Yes)
+            if(dialogResult == DialogResult.Yes)
             {
-                if (_currentPath != null)
+                if(_currentPath != null)
                     SaveKnowledgeBase(_currentPath);
                 else
                     SaveToolStripMenuItemClick(this, EventArgs.Empty);
             }
 
-            if (dialogResult == DialogResult.Cancel)
+            if(dialogResult == DialogResult.Cancel)
                 e.Cancel = true;
         }
 
@@ -378,20 +374,20 @@ namespace ExpertSystemShell.Gui
             var point = listView.PointToClient(new Point(e.X, e.Y));
             var insertItem = listView.GetItemAt(point.X, point.Y);
             var insertIndex = listView.Items.IndexOf(insertItem);
-            if (insertIndex < 0)
+            if(insertIndex < 0)
                 insertIndex = listView.Items.Count - 1;
 
-            if (radioButtonDomains.Checked)
+            if(radioButtonDomains.Checked)
             {
                 KnowledgeBase.Domains.Swap(_draggedIndex, insertIndex);
             }
 
-            if (radioButtonVariables.Checked)
+            if(radioButtonVariables.Checked)
             {
                 KnowledgeBase.Variables.Swap(_draggedIndex, insertIndex);
             }
 
-            if (radioButtonRules.Checked)
+            if(radioButtonRules.Checked)
             {
                 KnowledgeBase.Rules.Swap(_draggedIndex, insertIndex);
             }
@@ -417,7 +413,7 @@ namespace ExpertSystemShell.Gui
         {
             var consultationForm = new ConsultationForm();
             var dialogResult = consultationForm.ShowDialog();
-            if (dialogResult == DialogResult.OK)
+            if(dialogResult == DialogResult.OK)
             {
 
             }
@@ -425,15 +421,42 @@ namespace ExpertSystemShell.Gui
 
         private void ListViewMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if(e.Button == MouseButtons.Left)
             {
                 _draggedItem = listView.GetItemAt(e.X, e.Y);
 
-                if (_draggedItem == null)
+                if(_draggedItem == null)
                     return;
 
                 _draggedIndex = listView.Items.IndexOf(_draggedItem);
                 listView.DoDragDrop(_draggedItem, DragDropEffects.Move);
+            }
+        }
+
+        private void CreateToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var dialogResult = MessageBox.Show("Сохранить изменения?", string.Empty, MessageBoxButtons.YesNoCancel);
+
+            if(dialogResult == DialogResult.Yes)
+            {
+                if(_currentPath != null)
+                    SaveKnowledgeBase(_currentPath);
+                else
+                    SaveToolStripMenuItemClick(this, EventArgs.Empty);
+            }
+
+            KnowledgeBase = new KnowledgeBase();
+            FillListView();
+        }
+
+        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if(dialogResult == DialogResult.OK)
+            {
+                _currentPath = saveFileDialog.FileName;
+                SaveKnowledgeBase(_currentPath);
             }
         }
     }

@@ -61,9 +61,10 @@
             this.listViewQuestion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewQuestion.FullRowSelect = true;
             this.listViewQuestion.GridLines = true;
-            this.listViewQuestion.Location = new System.Drawing.Point(3, 27);
+            this.listViewQuestion.Location = new System.Drawing.Point(2, 15);
+            this.listViewQuestion.Margin = new System.Windows.Forms.Padding(2);
             this.listViewQuestion.Name = "listViewQuestion";
-            this.listViewQuestion.Size = new System.Drawing.Size(972, 642);
+            this.listViewQuestion.Size = new System.Drawing.Size(484, 331);
             this.listViewQuestion.TabIndex = 0;
             this.listViewQuestion.UseCompatibleStateImageBehavior = false;
             this.listViewQuestion.View = System.Windows.Forms.View.Details;
@@ -82,9 +83,11 @@
             // 
             this.groupBoxQuestions.Controls.Add(this.listViewQuestion);
             this.groupBoxQuestions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxQuestions.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxQuestions.Location = new System.Drawing.Point(2, 2);
+            this.groupBoxQuestions.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxQuestions.Name = "groupBoxQuestions";
-            this.groupBoxQuestions.Size = new System.Drawing.Size(978, 672);
+            this.groupBoxQuestions.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxQuestions.Size = new System.Drawing.Size(488, 348);
             this.groupBoxQuestions.TabIndex = 1;
             this.groupBoxQuestions.TabStop = false;
             this.groupBoxQuestions.Text = "Вопросы";
@@ -99,22 +102,25 @@
             this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanelExplain, 0, 3);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelMain.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 4;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 90F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(984, 928);
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(492, 483);
             this.tableLayoutPanelMain.TabIndex = 2;
             // 
             // groupBoxAnswer
             // 
             this.groupBoxAnswer.Controls.Add(this.tableLayoutPanelAnswer);
             this.groupBoxAnswer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxAnswer.Location = new System.Drawing.Point(3, 681);
+            this.groupBoxAnswer.Location = new System.Drawing.Point(2, 354);
+            this.groupBoxAnswer.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxAnswer.Name = "groupBoxAnswer";
-            this.groupBoxAnswer.Size = new System.Drawing.Size(978, 84);
+            this.groupBoxAnswer.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxAnswer.Size = new System.Drawing.Size(488, 43);
             this.groupBoxAnswer.TabIndex = 2;
             this.groupBoxAnswer.TabStop = false;
             this.groupBoxAnswer.Text = "Ответ";
@@ -123,23 +129,25 @@
             // 
             this.tableLayoutPanelAnswer.ColumnCount = 2;
             this.tableLayoutPanelAnswer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAnswer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanelAnswer.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanelAnswer.Controls.Add(this.buttonAnswer, 1, 0);
             this.tableLayoutPanelAnswer.Controls.Add(this.comboBoxAnswers, 0, 0);
             this.tableLayoutPanelAnswer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelAnswer.Location = new System.Drawing.Point(3, 27);
+            this.tableLayoutPanelAnswer.Location = new System.Drawing.Point(2, 15);
+            this.tableLayoutPanelAnswer.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelAnswer.Name = "tableLayoutPanelAnswer";
             this.tableLayoutPanelAnswer.RowCount = 1;
             this.tableLayoutPanelAnswer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelAnswer.Size = new System.Drawing.Size(972, 54);
+            this.tableLayoutPanelAnswer.Size = new System.Drawing.Size(484, 26);
             this.tableLayoutPanelAnswer.TabIndex = 0;
             // 
             // buttonAnswer
             // 
             this.buttonAnswer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAnswer.Location = new System.Drawing.Point(825, 3);
+            this.buttonAnswer.Location = new System.Drawing.Point(411, 2);
+            this.buttonAnswer.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAnswer.Name = "buttonAnswer";
-            this.buttonAnswer.Size = new System.Drawing.Size(144, 48);
+            this.buttonAnswer.Size = new System.Drawing.Size(71, 22);
             this.buttonAnswer.TabIndex = 0;
             this.buttonAnswer.Text = "Ответить";
             this.buttonAnswer.UseVisualStyleBackColor = true;
@@ -149,18 +157,21 @@
             // 
             this.comboBoxAnswers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxAnswers.FormattingEnabled = true;
-            this.comboBoxAnswers.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxAnswers.Location = new System.Drawing.Point(2, 2);
+            this.comboBoxAnswers.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxAnswers.Name = "comboBoxAnswers";
-            this.comboBoxAnswers.Size = new System.Drawing.Size(816, 33);
+            this.comboBoxAnswers.Size = new System.Drawing.Size(405, 21);
             this.comboBoxAnswers.TabIndex = 1;
             // 
             // groupBoxResult
             // 
             this.groupBoxResult.Controls.Add(this.tableLayoutPanelResult);
             this.groupBoxResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxResult.Location = new System.Drawing.Point(3, 771);
+            this.groupBoxResult.Location = new System.Drawing.Point(2, 401);
+            this.groupBoxResult.Margin = new System.Windows.Forms.Padding(2);
             this.groupBoxResult.Name = "groupBoxResult";
-            this.groupBoxResult.Size = new System.Drawing.Size(978, 74);
+            this.groupBoxResult.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxResult.Size = new System.Drawing.Size(488, 38);
             this.groupBoxResult.TabIndex = 3;
             this.groupBoxResult.TabStop = false;
             this.groupBoxResult.Text = "Результат";
@@ -175,20 +186,22 @@
             this.tableLayoutPanelResult.Controls.Add(this.labelResult, 2, 0);
             this.tableLayoutPanelResult.Controls.Add(this.labelEquals, 1, 0);
             this.tableLayoutPanelResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelResult.Location = new System.Drawing.Point(3, 27);
+            this.tableLayoutPanelResult.Location = new System.Drawing.Point(2, 15);
+            this.tableLayoutPanelResult.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelResult.Name = "tableLayoutPanelResult";
             this.tableLayoutPanelResult.RowCount = 1;
             this.tableLayoutPanelResult.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelResult.Size = new System.Drawing.Size(972, 44);
+            this.tableLayoutPanelResult.Size = new System.Drawing.Size(484, 21);
             this.tableLayoutPanelResult.TabIndex = 0;
             // 
             // labelVariable
             // 
             this.labelVariable.AutoSize = true;
             this.labelVariable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVariable.Location = new System.Drawing.Point(3, 0);
+            this.labelVariable.Location = new System.Drawing.Point(2, 0);
+            this.labelVariable.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelVariable.Name = "labelVariable";
-            this.labelVariable.Size = new System.Drawing.Size(431, 44);
+            this.labelVariable.Size = new System.Drawing.Size(213, 21);
             this.labelVariable.TabIndex = 0;
             this.labelVariable.Text = "Цель консультации";
             this.labelVariable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -197,9 +210,10 @@
             // 
             this.labelResult.AutoSize = true;
             this.labelResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelResult.Location = new System.Drawing.Point(537, 0);
+            this.labelResult.Location = new System.Drawing.Point(267, 0);
+            this.labelResult.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelResult.Name = "labelResult";
-            this.labelResult.Size = new System.Drawing.Size(432, 44);
+            this.labelResult.Size = new System.Drawing.Size(215, 21);
             this.labelResult.TabIndex = 1;
             this.labelResult.Text = "?";
             this.labelResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -208,9 +222,10 @@
             // 
             this.labelEquals.AutoSize = true;
             this.labelEquals.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelEquals.Location = new System.Drawing.Point(440, 0);
+            this.labelEquals.Location = new System.Drawing.Point(219, 0);
+            this.labelEquals.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelEquals.Name = "labelEquals";
-            this.labelEquals.Size = new System.Drawing.Size(91, 44);
+            this.labelEquals.Size = new System.Drawing.Size(44, 21);
             this.labelEquals.TabIndex = 2;
             this.labelEquals.Text = "=";
             this.labelEquals.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -223,19 +238,21 @@
             this.tableLayoutPanelExplain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelExplain.Controls.Add(this.buttonExplain, 1, 0);
             this.tableLayoutPanelExplain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelExplain.Location = new System.Drawing.Point(3, 851);
+            this.tableLayoutPanelExplain.Location = new System.Drawing.Point(2, 443);
+            this.tableLayoutPanelExplain.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelExplain.Name = "tableLayoutPanelExplain";
             this.tableLayoutPanelExplain.RowCount = 1;
             this.tableLayoutPanelExplain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelExplain.Size = new System.Drawing.Size(978, 74);
+            this.tableLayoutPanelExplain.Size = new System.Drawing.Size(488, 38);
             this.tableLayoutPanelExplain.TabIndex = 4;
             // 
             // buttonExplain
             // 
             this.buttonExplain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonExplain.Location = new System.Drawing.Point(329, 3);
+            this.buttonExplain.Location = new System.Drawing.Point(164, 2);
+            this.buttonExplain.Margin = new System.Windows.Forms.Padding(2);
             this.buttonExplain.Name = "buttonExplain";
-            this.buttonExplain.Size = new System.Drawing.Size(320, 68);
+            this.buttonExplain.Size = new System.Drawing.Size(158, 34);
             this.buttonExplain.TabIndex = 0;
             this.buttonExplain.Text = "Объяснить";
             this.buttonExplain.UseVisualStyleBackColor = true;
@@ -243,13 +260,15 @@
             // 
             // ConsultationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 928);
+            this.ClientSize = new System.Drawing.Size(492, 483);
             this.Controls.Add(this.tableLayoutPanelMain);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ConsultationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Консультация";
+            this.Load += new System.EventHandler(this.ConsultationFormLoad);
             this.groupBoxQuestions.ResumeLayout(false);
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.groupBoxAnswer.ResumeLayout(false);

@@ -52,6 +52,8 @@
             this.listView = new System.Windows.Forms.ListView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tlpMain.SuspendLayout();
             this.groupBoxOperations.SuspendLayout();
@@ -80,30 +82,32 @@
             this.консультацияToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1606, 40);
+            this.menuStrip.Size = new System.Drawing.Size(1606, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createToolStripMenuItem,
+            this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
-            this.openToolStripMenuItem});
+            this.saveAsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(83, 38);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.saveToolStripMenuItem.Text = "Сохранить";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.openToolStripMenuItem.Text = "Открыть";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
@@ -113,20 +117,20 @@
             this.startToolStripMenuItem,
             this.showLastToolStripMenuItem});
             this.консультацияToolStripMenuItem.Name = "консультацияToolStripMenuItem";
-            this.консультацияToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
+            this.консультацияToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.консультацияToolStripMenuItem.Text = "Консультация";
             // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(399, 38);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.startToolStripMenuItem.Text = "Начать";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.ConsultToolStripMenuItemClick);
             // 
             // showLastToolStripMenuItem
             // 
             this.showLastToolStripMenuItem.Name = "showLastToolStripMenuItem";
-            this.showLastToolStripMenuItem.Size = new System.Drawing.Size(399, 38);
+            this.showLastToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.showLastToolStripMenuItem.Text = "Просмотреть последнюю";
             // 
             // tlpMain
@@ -137,11 +141,11 @@
             this.tlpMain.Controls.Add(this.groupBoxOperations, 1, 0);
             this.tlpMain.Controls.Add(this.groupBoxListView, 0, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpMain.Location = new System.Drawing.Point(0, 40);
+            this.tlpMain.Location = new System.Drawing.Point(0, 24);
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Size = new System.Drawing.Size(1606, 804);
+            this.tlpMain.Size = new System.Drawing.Size(1606, 820);
             this.tlpMain.TabIndex = 2;
             // 
             // groupBoxOperations
@@ -150,7 +154,7 @@
             this.groupBoxOperations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxOperations.Location = new System.Drawing.Point(1287, 3);
             this.groupBoxOperations.Name = "groupBoxOperations";
-            this.groupBoxOperations.Size = new System.Drawing.Size(316, 798);
+            this.groupBoxOperations.Size = new System.Drawing.Size(316, 814);
             this.groupBoxOperations.TabIndex = 0;
             this.groupBoxOperations.TabStop = false;
             // 
@@ -161,13 +165,13 @@
             this.tlpSide.Controls.Add(this.groupBoxMode, 0, 0);
             this.tlpSide.Controls.Add(this.tableLayoutPanelButtons, 0, 1);
             this.tlpSide.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpSide.Location = new System.Drawing.Point(3, 27);
+            this.tlpSide.Location = new System.Drawing.Point(3, 16);
             this.tlpSide.Name = "tlpSide";
             this.tlpSide.RowCount = 3;
             this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSide.Size = new System.Drawing.Size(310, 768);
+            this.tlpSide.Size = new System.Drawing.Size(310, 795);
             this.tlpSide.TabIndex = 0;
             // 
             // groupBoxMode
@@ -176,7 +180,7 @@
             this.groupBoxMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMode.Location = new System.Drawing.Point(3, 3);
             this.groupBoxMode.Name = "groupBoxMode";
-            this.groupBoxMode.Size = new System.Drawing.Size(304, 250);
+            this.groupBoxMode.Size = new System.Drawing.Size(304, 259);
             this.groupBoxMode.TabIndex = 0;
             this.groupBoxMode.TabStop = false;
             // 
@@ -188,13 +192,13 @@
             this.tlpSwitch.Controls.Add(this.radioButtonVariables, 0, 1);
             this.tlpSwitch.Controls.Add(this.radioButtonRules, 0, 2);
             this.tlpSwitch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tlpSwitch.Location = new System.Drawing.Point(3, 27);
+            this.tlpSwitch.Location = new System.Drawing.Point(3, 16);
             this.tlpSwitch.Name = "tlpSwitch";
             this.tlpSwitch.RowCount = 3;
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSwitch.Size = new System.Drawing.Size(298, 220);
+            this.tlpSwitch.Size = new System.Drawing.Size(298, 240);
             this.tlpSwitch.TabIndex = 0;
             // 
             // radioButtonDomains
@@ -202,7 +206,7 @@
             this.radioButtonDomains.AutoSize = true;
             this.radioButtonDomains.Location = new System.Drawing.Point(3, 3);
             this.radioButtonDomains.Name = "radioButtonDomains";
-            this.radioButtonDomains.Size = new System.Drawing.Size(125, 29);
+            this.radioButtonDomains.Size = new System.Drawing.Size(68, 17);
             this.radioButtonDomains.TabIndex = 0;
             this.radioButtonDomains.TabStop = true;
             this.radioButtonDomains.Text = "Домены";
@@ -212,9 +216,9 @@
             // radioButtonVariables
             // 
             this.radioButtonVariables.AutoSize = true;
-            this.radioButtonVariables.Location = new System.Drawing.Point(3, 76);
+            this.radioButtonVariables.Location = new System.Drawing.Point(3, 83);
             this.radioButtonVariables.Name = "radioButtonVariables";
-            this.radioButtonVariables.Size = new System.Drawing.Size(172, 29);
+            this.radioButtonVariables.Size = new System.Drawing.Size(91, 17);
             this.radioButtonVariables.TabIndex = 1;
             this.radioButtonVariables.TabStop = true;
             this.radioButtonVariables.Text = "Переменные";
@@ -224,9 +228,9 @@
             // radioButtonRules
             // 
             this.radioButtonRules.AutoSize = true;
-            this.radioButtonRules.Location = new System.Drawing.Point(3, 149);
+            this.radioButtonRules.Location = new System.Drawing.Point(3, 163);
             this.radioButtonRules.Name = "radioButtonRules";
-            this.radioButtonRules.Size = new System.Drawing.Size(129, 29);
+            this.radioButtonRules.Size = new System.Drawing.Size(69, 17);
             this.radioButtonRules.TabIndex = 2;
             this.radioButtonRules.TabStop = true;
             this.radioButtonRules.Text = "Правила";
@@ -241,13 +245,13 @@
             this.tableLayoutPanelButtons.Controls.Add(this.buttonEdit, 0, 1);
             this.tableLayoutPanelButtons.Controls.Add(this.buttonDelete, 0, 2);
             this.tableLayoutPanelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 259);
+            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 268);
             this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
             this.tableLayoutPanelButtons.RowCount = 3;
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(304, 250);
+            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(304, 259);
             this.tableLayoutPanelButtons.TabIndex = 1;
             // 
             // buttonAdd
@@ -264,7 +268,7 @@
             // buttonEdit
             // 
             this.buttonEdit.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonEdit.Location = new System.Drawing.Point(3, 86);
+            this.buttonEdit.Location = new System.Drawing.Point(3, 89);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(298, 50);
             this.buttonEdit.TabIndex = 1;
@@ -275,7 +279,7 @@
             // buttonDelete
             // 
             this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonDelete.Location = new System.Drawing.Point(3, 169);
+            this.buttonDelete.Location = new System.Drawing.Point(3, 175);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(298, 50);
             this.buttonDelete.TabIndex = 2;
@@ -289,7 +293,7 @@
             this.groupBoxListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxListView.Location = new System.Drawing.Point(3, 3);
             this.groupBoxListView.Name = "groupBoxListView";
-            this.groupBoxListView.Size = new System.Drawing.Size(1278, 798);
+            this.groupBoxListView.Size = new System.Drawing.Size(1278, 814);
             this.groupBoxListView.TabIndex = 1;
             this.groupBoxListView.TabStop = false;
             // 
@@ -300,9 +304,9 @@
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.HideSelection = false;
-            this.listView.Location = new System.Drawing.Point(3, 27);
+            this.listView.Location = new System.Drawing.Point(3, 16);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(1272, 768);
+            this.listView.Size = new System.Drawing.Size(1272, 795);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -326,6 +330,20 @@
             this.saveFileDialog.FileName = "knowledgeBase";
             this.saveFileDialog.Filter = "Файл базы знаний|*.kb";
             this.saveFileDialog.RestoreDirectory = true;
+            // 
+            // createToolStripMenuItem
+            // 
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.createToolStripMenuItem.Text = "Создать";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItemClick);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveAsToolStripMenuItem.Text = "Сохранить как...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
             // 
             // MainForm
             // 
@@ -380,6 +398,8 @@
         private System.Windows.Forms.ToolStripMenuItem консультацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showLastToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
     }
 }
 

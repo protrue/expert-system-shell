@@ -35,7 +35,7 @@ namespace ExpertSystemShell.Tools
 
         public bool IsReadOnly => false;
 
-        private IndexedList(List<T> items, Dictionary<string,T> indexes)
+        private IndexedList(List<T> items, Dictionary<string, T> indexes)
         {
             _items = new List<T>(items);
             _indexes = new Dictionary<string, T>(_indexes);
@@ -58,7 +58,7 @@ namespace ExpertSystemShell.Tools
         public void Add(T item)
         {
             var index = item.Index;
-            if (_indexes.ContainsKey(index))
+            if(_indexes.ContainsKey(index))
                 throw new ArgumentException();
 
             _indexes[index] = item;
@@ -68,11 +68,11 @@ namespace ExpertSystemShell.Tools
 
         public void Insert(int index, T item)
         {
-            if (index < 0 || index >= Count)
+            if(index < 0 || index >= Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-                var itemIndex = item.Index;
-            if (_indexes.ContainsKey(itemIndex))
+            var itemIndex = item.Index;
+            if(_indexes.ContainsKey(itemIndex))
                 throw new ArgumentException();
 
             _indexes[itemIndex] = item;
@@ -86,7 +86,7 @@ namespace ExpertSystemShell.Tools
 
         public bool Delete(string index)
         {
-            if (_indexes.ContainsKey(index))
+            if(_indexes.ContainsKey(index))
                 throw new ArgumentException();
 
             var item = _indexes[index];
@@ -99,7 +99,7 @@ namespace ExpertSystemShell.Tools
 
         public void Swap(T first, T second)
         {
-            var firstIndex =_items.IndexOf(first);
+            var firstIndex = _items.IndexOf(first);
             var secondIndex = _items.IndexOf(second);
             Swap(firstIndex, secondIndex);
         }
@@ -135,11 +135,16 @@ namespace ExpertSystemShell.Tools
             return Delete(item);
         }
 
+        public List<T> ToList()
+        {
+            return new List<T>(_items);
+        }
+
         public object Clone()
         {
             var clone = new IndexedList<T>();
 
-            foreach (var item in Items)
+            foreach(var item in Items)
             {
                 clone.Add((T)item.Clone());
             }
