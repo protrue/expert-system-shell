@@ -2,6 +2,7 @@
 {
     public static class StringExtensions
     {
-        public static string GetIndex(this string name) => name.ToLower().Replace(" ", string.Empty);
+        public static string GetIndex(this string name) =>
+            name.ToLower().Replace(" ", string.Empty);
     }
 }

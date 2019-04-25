@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpertSystemShell.Core;
 using ExpertSystemShell.Model;
 using ExpertSystemShell.Tools;
-using Newtonsoft.Json;
-using Rule = System.Data.Rule;
 
 namespace ExpertSystemShell.Gui
 {
@@ -26,12 +19,21 @@ namespace ExpertSystemShell.Gui
 
         private ListViewItem _draggedItem;
         private int _draggedIndex;
-        private bool dragDropDone = false;
+        private bool dragDropDone;
 
         public MainForm()
         {
             InitializeComponent();
             KnowledgeBase = new KnowledgeBase();
+        }
+
+        private void SetListViewColumnsWidth(ListView listView, params int[] widthes)
+        {
+            if (widthes.Length != listView.Columns.Count || widthes.Sum() > 100)
+                throw new ArgumentException();
+
+            for (var i = 0; i < listView.Columns.Count; i++)
+                listView.Columns[i].Width = (listView.Width - 5) * widthes[i] / 100;
         }
 
         private ListViewItem CreateListViewItem(Domain domain)
@@ -62,60 +64,80 @@ namespace ExpertSystemShell.Gui
                 new ListViewItem
                 {
                     Text = rule.Name,
-                    SubItems = { string.Join(", ", rule.Premise), string.Join(", ", rule.Conclusion), rule.Reason },
+                    SubItems = { string.Join(" И ", rule.Premise), string.Join(", ", rule.Conclusion), rule.Reason },
                     Tag = rule
                 };
+        }
+
+        private void SetColumnsSize()
+        {
+            //listView.AutoResizeColumns(listView.Items.Count > 0
+            //    ? ColumnHeaderAutoResizeStyle.ColumnContent
+            //    : ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            if (radioButtonDomains.Checked)
+            {
+                SetListViewColumnsWidth(listView, 30, 70);
+            }
+
+            if (radioButtonVariables.Checked)
+            {
+                SetListViewColumnsWidth(listView, 25, 25, 25, 25);
+            }
+
+            if (radioButtonRules.Checked)
+            {
+                SetListViewColumnsWidth(listView, 25, 25, 25, 25);
+            }
         }
 
         private void FillListView()
         {
             listView.Items.Clear();
 
-            if(radioButtonDomains.Checked)
+            if (radioButtonDomains.Checked)
             {
-                foreach(var domain in KnowledgeBase.Domains)
+                foreach (var domain in KnowledgeBase.Domains)
                 {
                     listView.Items.Add(CreateListViewItem(domain));
                 }
             }
             else
-            if(radioButtonVariables.Checked)
+            if (radioButtonVariables.Checked)
             {
-                foreach(var variable in KnowledgeBase.Variables)
+                foreach (var variable in KnowledgeBase.Variables)
                 {
                     listView.Items.Add(CreateListViewItem(variable));
                 }
             }
             else
-            if(radioButtonRules.Checked)
+            if (radioButtonRules.Checked)
             {
-                foreach(var rule in KnowledgeBase.Rules)
+                foreach (var rule in KnowledgeBase.Rules)
                 {
                     listView.Items.Add(CreateListViewItem(rule));
                 }
             }
 
-            if(listView.Items.Count > 0)
-                listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            else
-                listView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
+            SetColumnsSize();
         }
 
         private void ButtonAddClick(object sender, EventArgs e)
         {
-            if(radioButtonDomains.Checked)
+            if (radioButtonDomains.Checked)
             {
-                var domainForm = new DomainForm();
-                domainForm.Domains = KnowledgeBase.Domains;
+                var domainForm = new DomainForm { KnowledgeBase = KnowledgeBase };
                 var dialogResult = domainForm.ShowDialog();
-                if(dialogResult != DialogResult.OK)
+                if (dialogResult != DialogResult.OK)
                     return;
 
-                if(listView.SelectedIndices.Count > 0)
+                if (listView.SelectedIndices.Count > 0)
                 {
-                    KnowledgeBase.Domains.Insert(listView.SelectedIndices[0], domainForm.Domain);
-                    listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(domainForm.Domain));
+                    var insertIndex = listView.SelectedIndices.Cast<int>().Max() + 1;
+                    KnowledgeBase.Domains.Insert(insertIndex, domainForm.Domain);
+                    listView.Items.Insert(insertIndex, CreateListViewItem(domainForm.Domain));
+                    listView.SelectedIndices.Clear();
+                    listView.SelectedIndices.Add(insertIndex);
                 }
                 else
                 {
@@ -125,19 +147,23 @@ namespace ExpertSystemShell.Gui
                 }
             }
 
-            if(radioButtonVariables.Checked)
+            if (radioButtonVariables.Checked)
             {
-                var variableForm = new VariableForm();
-                variableForm.Domains = KnowledgeBase.Domains;
-                variableForm.Variables = KnowledgeBase.Variables;
+                var variableForm = new VariableForm
+                {
+                    KnowledgeBase = KnowledgeBase,
+                };
                 var dialogResult = variableForm.ShowDialog();
-                if(dialogResult != DialogResult.OK)
+                if (dialogResult != DialogResult.OK)
                     return;
 
-                if(listView.SelectedIndices.Count > 0)
+                if (listView.SelectedIndices.Count > 0)
                 {
-                    KnowledgeBase.Variables.Insert(listView.SelectedIndices[0], variableForm.Variable);
-                    listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(variableForm.Variable));
+                    var insertIndex = listView.SelectedIndices.Cast<int>().Max() + 1;
+                    KnowledgeBase.Variables.Insert(insertIndex, variableForm.Variable);
+                    listView.Items.Insert(insertIndex, CreateListViewItem(variableForm.Variable));
+                    listView.SelectedIndices.Clear();
+                    listView.SelectedIndices.Add(insertIndex);
                 }
                 else
                 {
@@ -147,20 +173,21 @@ namespace ExpertSystemShell.Gui
                 }
             }
 
-            if(radioButtonRules.Checked)
+            if (radioButtonRules.Checked)
             {
-                var ruleForm = new RuleForm();
-                ruleForm.Rules = KnowledgeBase.Rules;
-                ruleForm.Variables = KnowledgeBase.Variables;
-                ruleForm.Domains = KnowledgeBase.Domains;
+                var ruleForm = new RuleForm
+                { KnowledgeBase = KnowledgeBase };
                 var dialogResult = ruleForm.ShowDialog();
-                if(dialogResult != DialogResult.OK)
+                if (dialogResult != DialogResult.OK)
                     return;
 
-                if(listView.SelectedIndices.Count > 0)
+                if (listView.SelectedIndices.Count > 0)
                 {
-                    KnowledgeBase.Rules.Insert(listView.SelectedIndices[0], ruleForm.Rule);
-                    listView.Items.Insert(listView.SelectedIndices[0], CreateListViewItem(ruleForm.Rule));
+                    var insertIndex = listView.SelectedIndices.Cast<int>().Max() + 1;
+                    KnowledgeBase.Rules.Insert(insertIndex, ruleForm.Rule);
+                    listView.Items.Insert(insertIndex, CreateListViewItem(ruleForm.Rule));
+                    listView.SelectedIndices.Clear();
+                    listView.SelectedIndices.Add(insertIndex);
                 }
                 else
                 {
@@ -169,73 +196,151 @@ namespace ExpertSystemShell.Gui
                     listView.SelectedIndices.Add(listView.Items.Count - 1);
                 }
             }
+
+            SetColumnsSize();
         }
 
         private void ButtonEditClick(object sender, EventArgs e)
         {
-            if(radioButtonDomains.Checked)
+            var selectedIndex = listView.SelectedIndices[0];
+
+            if (radioButtonDomains.Checked)
             {
-                var domainForm = new DomainForm();
-                domainForm.Domains = KnowledgeBase.Domains;
-                domainForm.Domain = KnowledgeBase.Domains[listView.SelectedIndices[0]];
+                var domainForm = new DomainForm
+                {
+                    KnowledgeBase = KnowledgeBase,
+                    Domain = KnowledgeBase.Domains[listView.SelectedIndices[0]]
+                };
                 var dialogResult = domainForm.ShowDialog();
                 KnowledgeBase.Domains[listView.SelectedIndices[0]] = domainForm.Domain;
                 listView.Items[listView.SelectedIndices[0]] = CreateListViewItem(domainForm.Domain);
             }
 
-            if(radioButtonVariables.Checked)
+            if (radioButtonVariables.Checked)
             {
-                var variableForm = new VariableForm();
-                variableForm.Variables = KnowledgeBase.Variables;
-                variableForm.Domains = KnowledgeBase.Domains;
-                variableForm.Variable = KnowledgeBase.Variables[listView.SelectedIndices[0]];
+                var variableForm = new VariableForm
+                {
+                    KnowledgeBase = KnowledgeBase,
+                    Variable = KnowledgeBase.Variables[listView.SelectedIndices[0]]
+                };
                 var dialogResult = variableForm.ShowDialog();
                 KnowledgeBase.Variables[listView.SelectedIndices[0]] = variableForm.Variable;
                 listView.Items[listView.SelectedIndices[0]] = CreateListViewItem(variableForm.Variable);
             }
 
-            if(radioButtonRules.Checked)
+            if (radioButtonRules.Checked)
             {
-                var ruleForm = new RuleForm();
-                ruleForm.Rules = KnowledgeBase.Rules;
-                ruleForm.Variables = KnowledgeBase.Variables;
-                ruleForm.Domains = KnowledgeBase.Domains;
-                ruleForm.Rule = KnowledgeBase.Rules[listView.SelectedIndices[0]];
+                var ruleForm = new RuleForm
+                {
+                    KnowledgeBase = KnowledgeBase,
+                    Rule = KnowledgeBase.Rules[listView.SelectedIndices[0]]
+                };
                 var dialogResult = ruleForm.ShowDialog();
                 KnowledgeBase.Rules[listView.SelectedIndices[0]] = ruleForm.Rule;
                 listView.Items[listView.SelectedIndices[0]] = CreateListViewItem(ruleForm.Rule);
             }
+
+            listView.SelectedIndices.Add(selectedIndex);
+            SetColumnsSize();
         }
 
         private void ButtonDeleteClick(object sender, EventArgs e)
         {
-            var indicesToDelete = listView.SelectedItems.Cast<int>().ToArray();
+            var indicesToDelete = listView.SelectedIndices.Cast<int>().ToArray();
+            var notDeletedItems = new List<Tuple<IndexedNamedItem, List<IndexedNamedItem>>>();
+            var notDeletedListViewItems = new List<ListViewItem>();
+            var notDeletedIndices = new List<int>();
 
-            foreach(var indexToDelete in indicesToDelete)
+            foreach (var indexToDelete in indicesToDelete)
             {
-                if(radioButtonDomains.Checked)
+                if (radioButtonDomains.Checked)
                 {
-                    KnowledgeBase.Domains.Delete(indexToDelete);
+                    var domainToDelete = KnowledgeBase.Domains[indexToDelete];
+                    var variablesWithDeletingDomain =
+                        KnowledgeBase
+                            .Variables
+                            .Where(v => v.Domain == domainToDelete)
+                            .Cast<IndexedNamedItem>()
+                            .ToList();
+                    if (variablesWithDeletingDomain.Count > 0)
+                    {
+                        notDeletedItems.Add(Tuple.Create((IndexedNamedItem)domainToDelete, variablesWithDeletingDomain));
+                        notDeletedListViewItems.Add(listView.Items[indexToDelete]);
+                        notDeletedIndices.Add(indexToDelete);
+                        continue;
+                    }
                 }
 
-                if(radioButtonVariables.Checked)
+                if (radioButtonVariables.Checked)
                 {
-                    KnowledgeBase.Variables.Delete(indexToDelete);
+                    var variableToDelete = KnowledgeBase.Variables[indexToDelete];
+                    var rulesWithDeletingVariable =
+                        KnowledgeBase
+                            .Rules
+                            .Where(r =>
+                                r.Premise.Count(f => f.Variable == variableToDelete) > 0
+                                || r.Conclusion.Count(f => f.Variable == variableToDelete) > 0)
+                            .Cast<IndexedNamedItem>()
+                            .ToList();
+                    if (rulesWithDeletingVariable.Count > 0)
+                    {
+                        notDeletedItems.Add(Tuple.Create((IndexedNamedItem)variableToDelete, rulesWithDeletingVariable));
+                        notDeletedListViewItems.Add(listView.Items[indexToDelete]);
+                        notDeletedIndices.Add(indexToDelete);
+                        continue;
+                    }
                 }
-
-                if(radioButtonRules.Checked)
-                {
-                    KnowledgeBase.Rules.Delete(indexToDelete);
-                }
-
-                listView.Items.RemoveAt(indexToDelete);
             }
 
-            if(listView.Items.Count > 0)
+            var itemsToDelete = new List<ListViewItem>();
+
+            foreach (var indexToDelete in indicesToDelete.Except(notDeletedIndices))
+            {
+                itemsToDelete.Add(listView.Items[indexToDelete]);
+            }
+
+            foreach (ListViewItem itemToDelete in itemsToDelete)
+            {
+                if (radioButtonDomains.Checked)
+                {
+                    KnowledgeBase.Domains.Delete((Domain)itemToDelete.Tag);
+                }
+
+                if (radioButtonVariables.Checked)
+                {
+                    KnowledgeBase.Variables.Delete((Variable)itemToDelete.Tag);
+                }
+
+                if (radioButtonRules.Checked)
+                {
+                    KnowledgeBase.Rules.Delete((Rule)itemToDelete.Tag);
+                }
+
+                listView.Items.Remove(itemToDelete);
+            }
+
+            if (listView.Items.Count > 0)
             {
                 listView.SelectedIndices.Clear();
-                listView.SelectedIndices.Add(indicesToDelete[0] - 1 >= 0 ? indicesToDelete[0] - 1 : 0);
+                if (notDeletedIndices.Count == 0)
+                {
+                    listView.SelectedIndices.Add(indicesToDelete.Max() + 1 >= listView.Items.Count ? listView.Items.Count - 1 : indicesToDelete.Max() + 1);
+                }
+                else
+                {
+                    foreach (var notDeletedListViewItem in notDeletedListViewItems)
+                    {
+                        listView.SelectedIndices.Add(listView.Items.IndexOf(notDeletedListViewItem));
+                    }
+                }
             }
+
+            if (notDeletedItems.Count > 0)
+            {
+                MessageBox.Show($"Невозможно удалить:{Environment.NewLine}{string.Join(Environment.NewLine, notDeletedItems.Select(t => $"<{t.Item1}> из-за {string.Join(", ", t.Item2.Select(i => $"<{i.Name}>"))}"))}");
+            }
+
+            SetColumnsSize();
         }
 
         private void SetListViewColumnsForDomains()
@@ -262,17 +367,17 @@ namespace ExpertSystemShell.Gui
 
         private void SetListViewColumns()
         {
-            if(radioButtonDomains.Checked)
+            if (radioButtonDomains.Checked)
             {
                 SetListViewColumnsForDomains();
             }
 
-            if(radioButtonVariables.Checked)
+            if (radioButtonVariables.Checked)
             {
                 SetListViewColumnsForVariables();
             }
 
-            if(radioButtonRules.Checked)
+            if (radioButtonRules.Checked)
             {
                 SetListViewColumnsForRules();
             }
@@ -297,71 +402,18 @@ namespace ExpertSystemShell.Gui
             buttonDelete.Enabled = listView.SelectedItems.Count > 0;
         }
 
-        private void LoadKnowledgeBase(string path)
+        private void ListViewMouseMove(object sender, MouseEventArgs e)
         {
-            var binaryFormatter = new BinaryFormatter();
-            var fileStream = new FileStream(path, FileMode.Open);
-            KnowledgeBase = (KnowledgeBase)binaryFormatter.Deserialize(fileStream);
-            fileStream.Close();
-        }
-
-        private void SaveKnowledgeBase(string path)
-        {
-            var binaryFormatter = new BinaryFormatter();
-            var fileStream = new FileStream(path, FileMode.Create);
-            binaryFormatter.Serialize(fileStream, KnowledgeBase);
-            fileStream.Close();
-        }
-
-        private void SaveToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            if(_currentPath == null)
+            if (e.Button == MouseButtons.Left)
             {
-                var dialogResult = saveFileDialog.ShowDialog();
-                if(dialogResult == DialogResult.OK)
-                {
-                    _currentPath = saveFileDialog.FileName;
-                    SaveKnowledgeBase(_currentPath);
-                }
+                _draggedItem = listView.GetItemAt(e.X, e.Y);
+
+                if (_draggedItem == null)
+                    return;
+
+                _draggedIndex = listView.Items.IndexOf(_draggedItem);
+                listView.DoDragDrop(_draggedItem, DragDropEffects.Move);
             }
-        }
-
-        private void OpenToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            var dialogResult = openFileDialog.ShowDialog();
-            if(dialogResult == DialogResult.OK)
-            {
-                _currentPath = openFileDialog.FileName;
-                LoadKnowledgeBase(_currentPath);
-                FillListView();
-            }
-        }
-
-        private void MainFormFormClosing(object sender, FormClosingEventArgs e)
-        {
-            var dialogResult = MessageBox.Show("Сохранить изменения?", string.Empty, MessageBoxButtons.YesNoCancel);
-
-            if(dialogResult == DialogResult.Yes)
-            {
-                if(_currentPath != null)
-                    SaveKnowledgeBase(_currentPath);
-                else
-                    SaveToolStripMenuItemClick(this, EventArgs.Empty);
-            }
-
-            if(dialogResult == DialogResult.Cancel)
-                e.Cancel = true;
-        }
-
-        private void ListViewMouseDown(object sender, MouseEventArgs e)
-        {
-            //_draggedItem = listView.GetItemAt(e.X, e.Y);
-
-            //if (_draggedItem == null)
-            //    return;
-
-            //_draggedIndex = listView.Items.IndexOf(_draggedItem);
-            //listView.DoDragDrop(_draggedItem, DragDropEffects.Move);
         }
 
         private void ListBoxValuesDragOver(object sender, DragEventArgs e)
@@ -374,20 +426,20 @@ namespace ExpertSystemShell.Gui
             var point = listView.PointToClient(new Point(e.X, e.Y));
             var insertItem = listView.GetItemAt(point.X, point.Y);
             var insertIndex = listView.Items.IndexOf(insertItem);
-            if(insertIndex < 0)
+            if (insertIndex < 0)
                 insertIndex = listView.Items.Count - 1;
 
-            if(radioButtonDomains.Checked)
+            if (radioButtonDomains.Checked)
             {
                 KnowledgeBase.Domains.Swap(_draggedIndex, insertIndex);
             }
 
-            if(radioButtonVariables.Checked)
+            if (radioButtonVariables.Checked)
             {
                 KnowledgeBase.Variables.Swap(_draggedIndex, insertIndex);
             }
 
-            if(radioButtonRules.Checked)
+            if (radioButtonRules.Checked)
             {
                 KnowledgeBase.Rules.Swap(_draggedIndex, insertIndex);
             }
@@ -399,65 +451,95 @@ namespace ExpertSystemShell.Gui
             dragDropDone = true;
         }
 
-        private void ListViewMouseUp(object sender, MouseEventArgs e)
+        private void LoadKnowledgeBase(string path)
         {
-            //if (dragDropDone)
-            //{
-            //    dragDropDone = false;
-
-            //    listView.SelectedIndices.Clear();
-            //}
+            var binaryFormatter = new BinaryFormatter();
+            var fileStream = new FileStream(path, FileMode.Open);
+            KnowledgeBase = (KnowledgeBase)binaryFormatter.Deserialize(fileStream);
+            fileStream.Close();
         }
 
-        private void ConsultToolStripMenuItemClick(object sender, EventArgs e)
+        private void SaveKnowledgeBase(string path)
         {
-            var consultationForm = new ConsultationForm();
-            var dialogResult = consultationForm.ShowDialog();
-            if(dialogResult == DialogResult.OK)
-            {
-
-            }
-        }
-
-        private void ListViewMouseMove(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Left)
-            {
-                _draggedItem = listView.GetItemAt(e.X, e.Y);
-
-                if(_draggedItem == null)
-                    return;
-
-                _draggedIndex = listView.Items.IndexOf(_draggedItem);
-                listView.DoDragDrop(_draggedItem, DragDropEffects.Move);
-            }
+            var binaryFormatter = new BinaryFormatter();
+            var fileStream = new FileStream(path, FileMode.Create);
+            KnowledgeBase.Name = Path.GetFileNameWithoutExtension(path);
+            binaryFormatter.Serialize(fileStream, KnowledgeBase);
+            fileStream.Close();
         }
 
         private void CreateToolStripMenuItemClick(object sender, EventArgs e)
         {
             var dialogResult = MessageBox.Show("Сохранить изменения?", string.Empty, MessageBoxButtons.YesNoCancel);
 
-            if(dialogResult == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
-                if(_currentPath != null)
-                    SaveKnowledgeBase(_currentPath);
-                else
-                    SaveToolStripMenuItemClick(this, EventArgs.Empty);
+                SaveToolStripMenuItemClick(sender, e);
             }
 
             KnowledgeBase = new KnowledgeBase();
             FillListView();
         }
 
-        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+        private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var dialogResult = saveFileDialog.ShowDialog();
-
-            if(dialogResult == DialogResult.OK)
+            var dialogResult = openFileDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
             {
-                _currentPath = saveFileDialog.FileName;
+                _currentPath = openFileDialog.FileName;
+                LoadKnowledgeBase(_currentPath);
+                FillListView();
+            }
+        }
+
+        private void SaveToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (_currentPath == null)
+            {
+                SaveAsToolStripMenuItemClick(sender, e);
+            }
+            else
+            {
                 SaveKnowledgeBase(_currentPath);
             }
+        }
+
+        private void MainFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+            var dialogResult = MessageBox.Show("Сохранить изменения?", string.Empty, MessageBoxButtons.YesNoCancel);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                SaveToolStripMenuItemClick(this, e);
+            }
+
+            if (dialogResult == DialogResult.Cancel)
+                e.Cancel = true;
+        }
+
+        private void SaveAsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            saveFileDialog.FileName = KnowledgeBase.Name;
+            var dialogResult = saveFileDialog.ShowDialog();
+            if (dialogResult != DialogResult.OK) return;
+            _currentPath = saveFileDialog.FileName;
+            SaveKnowledgeBase(_currentPath);
+        }
+
+        private void ConsultToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var consultationForm = new ConsultationForm();
+            consultationForm.KnowledgeBase = KnowledgeBase;
+            var dialogResult = consultationForm.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+
+            }
+        }
+
+        private void MainFormResize(object sender, EventArgs e)
+        {
+            SetColumnsSize();
         }
     }
 }

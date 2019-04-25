@@ -44,6 +44,7 @@
             this.labelEquals = new System.Windows.Forms.Label();
             this.tableLayoutPanelExplain = new System.Windows.Forms.TableLayoutPanel();
             this.buttonExplain = new System.Windows.Forms.Button();
+            this.buttonRestart = new System.Windows.Forms.Button();
             this.groupBoxQuestions.SuspendLayout();
             this.tableLayoutPanelMain.SuspendLayout();
             this.groupBoxAnswer.SuspendLayout();
@@ -156,6 +157,7 @@
             // comboBoxAnswers
             // 
             this.comboBoxAnswers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxAnswers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAnswers.FormattingEnabled = true;
             this.comboBoxAnswers.Location = new System.Drawing.Point(2, 2);
             this.comboBoxAnswers.Margin = new System.Windows.Forms.Padding(2);
@@ -236,7 +238,8 @@
             this.tableLayoutPanelExplain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelExplain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelExplain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanelExplain.Controls.Add(this.buttonExplain, 1, 0);
+            this.tableLayoutPanelExplain.Controls.Add(this.buttonExplain, 2, 0);
+            this.tableLayoutPanelExplain.Controls.Add(this.buttonRestart, 0, 0);
             this.tableLayoutPanelExplain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelExplain.Location = new System.Drawing.Point(2, 443);
             this.tableLayoutPanelExplain.Margin = new System.Windows.Forms.Padding(2);
@@ -249,14 +252,25 @@
             // buttonExplain
             // 
             this.buttonExplain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonExplain.Location = new System.Drawing.Point(164, 2);
+            this.buttonExplain.Location = new System.Drawing.Point(326, 2);
             this.buttonExplain.Margin = new System.Windows.Forms.Padding(2);
             this.buttonExplain.Name = "buttonExplain";
-            this.buttonExplain.Size = new System.Drawing.Size(158, 34);
-            this.buttonExplain.TabIndex = 0;
+            this.buttonExplain.Size = new System.Drawing.Size(160, 34);
+            this.buttonExplain.TabIndex = 1;
             this.buttonExplain.Text = "Объяснить";
             this.buttonExplain.UseVisualStyleBackColor = true;
             this.buttonExplain.Click += new System.EventHandler(this.ButtonExplainClick);
+            // 
+            // buttonRestart
+            // 
+            this.buttonRestart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonRestart.Location = new System.Drawing.Point(3, 3);
+            this.buttonRestart.Name = "buttonRestart";
+            this.buttonRestart.Size = new System.Drawing.Size(156, 32);
+            this.buttonRestart.TabIndex = 2;
+            this.buttonRestart.Text = "Начать заново";
+            this.buttonRestart.UseVisualStyleBackColor = true;
+            this.buttonRestart.Click += new System.EventHandler(this.ButtonRestartClick);
             // 
             // ConsultationForm
             // 
@@ -269,6 +283,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Консультация";
             this.Load += new System.EventHandler(this.ConsultationFormLoad);
+            this.Resize += new System.EventHandler(this.ConsultationFormResize);
             this.groupBoxQuestions.ResumeLayout(false);
             this.tableLayoutPanelMain.ResumeLayout(false);
             this.groupBoxAnswer.ResumeLayout(false);
@@ -299,5 +314,6 @@
         private System.Windows.Forms.Label labelEquals;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelExplain;
         private System.Windows.Forms.Button buttonExplain;
+        private System.Windows.Forms.Button buttonRestart;
     }
 }

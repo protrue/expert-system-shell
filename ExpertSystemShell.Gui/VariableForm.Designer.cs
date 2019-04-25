@@ -56,18 +56,21 @@
             this.groupBoxMain.Controls.Add(this.labelQuestion);
             this.groupBoxMain.Controls.Add(this.labelDomain);
             this.groupBoxMain.Controls.Add(this.labelName);
-            this.groupBoxMain.Location = new System.Drawing.Point(28, 12);
+            this.groupBoxMain.Location = new System.Drawing.Point(14, 6);
+            this.groupBoxMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Size = new System.Drawing.Size(636, 545);
+            this.groupBoxMain.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxMain.Size = new System.Drawing.Size(318, 283);
             this.groupBoxMain.TabIndex = 0;
             this.groupBoxMain.TabStop = false;
             this.groupBoxMain.Text = "Редактирование переменной";
             // 
             // buttonAddDomain
             // 
-            this.buttonAddDomain.Location = new System.Drawing.Point(577, 133);
+            this.buttonAddDomain.Location = new System.Drawing.Point(288, 69);
+            this.buttonAddDomain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonAddDomain.Name = "buttonAddDomain";
-            this.buttonAddDomain.Size = new System.Drawing.Size(33, 33);
+            this.buttonAddDomain.Size = new System.Drawing.Size(21, 21);
             this.buttonAddDomain.TabIndex = 6;
             this.buttonAddDomain.Text = "+";
             this.buttonAddDomain.UseVisualStyleBackColor = true;
@@ -75,9 +78,10 @@
             // 
             // richTextBoxQuestion
             // 
-            this.richTextBoxQuestion.Location = new System.Drawing.Point(47, 409);
+            this.richTextBoxQuestion.Location = new System.Drawing.Point(24, 213);
+            this.richTextBoxQuestion.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBoxQuestion.Name = "richTextBoxQuestion";
-            this.richTextBoxQuestion.Size = new System.Drawing.Size(511, 96);
+            this.richTextBoxQuestion.Size = new System.Drawing.Size(258, 52);
             this.richTextBoxQuestion.TabIndex = 5;
             this.richTextBoxQuestion.Text = "";
             this.richTextBoxQuestion.Leave += new System.EventHandler(this.RichTextBoxQuestionLeave);
@@ -86,17 +90,19 @@
             // 
             this.comboBoxDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxDomain.FormattingEnabled = true;
-            this.comboBoxDomain.Location = new System.Drawing.Point(220, 133);
+            this.comboBoxDomain.Location = new System.Drawing.Point(110, 69);
+            this.comboBoxDomain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxDomain.Name = "comboBoxDomain";
-            this.comboBoxDomain.Size = new System.Drawing.Size(338, 33);
+            this.comboBoxDomain.Size = new System.Drawing.Size(171, 21);
             this.comboBoxDomain.TabIndex = 1;
             this.comboBoxDomain.SelectedIndexChanged += new System.EventHandler(this.ComboBoxDomainSelectedIndexChanged);
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(220, 55);
+            this.textBoxName.Location = new System.Drawing.Point(110, 29);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(338, 31);
+            this.textBoxName.Size = new System.Drawing.Size(171, 20);
             this.textBoxName.TabIndex = 4;
             this.textBoxName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBoxNameKeyDown);
             this.textBoxName.Leave += new System.EventHandler(this.TextBoxNameLeave);
@@ -106,9 +112,11 @@
             this.groupBoxVariableKind.Controls.Add(this.radioButtonDeductibleRequested);
             this.groupBoxVariableKind.Controls.Add(this.radioButtonRequested);
             this.groupBoxVariableKind.Controls.Add(this.radioButtonDeductible);
-            this.groupBoxVariableKind.Location = new System.Drawing.Point(36, 195);
+            this.groupBoxVariableKind.Location = new System.Drawing.Point(18, 101);
+            this.groupBoxVariableKind.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBoxVariableKind.Name = "groupBoxVariableKind";
-            this.groupBoxVariableKind.Size = new System.Drawing.Size(522, 158);
+            this.groupBoxVariableKind.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBoxVariableKind.Size = new System.Drawing.Size(261, 82);
             this.groupBoxVariableKind.TabIndex = 3;
             this.groupBoxVariableKind.TabStop = false;
             this.groupBoxVariableKind.Text = "Тип переменной";
@@ -116,9 +124,10 @@
             // radioButtonDeductibleRequested
             // 
             this.radioButtonDeductibleRequested.AutoSize = true;
-            this.radioButtonDeductibleRequested.Location = new System.Drawing.Point(18, 115);
+            this.radioButtonDeductibleRequested.Location = new System.Drawing.Point(9, 60);
+            this.radioButtonDeductibleRequested.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonDeductibleRequested.Name = "radioButtonDeductibleRequested";
-            this.radioButtonDeductibleRequested.Size = new System.Drawing.Size(314, 29);
+            this.radioButtonDeductibleRequested.Size = new System.Drawing.Size(163, 17);
             this.radioButtonDeductibleRequested.TabIndex = 3;
             this.radioButtonDeductibleRequested.TabStop = true;
             this.radioButtonDeductibleRequested.Text = "Выводимо-запрашиваемая";
@@ -128,9 +137,10 @@
             // radioButtonRequested
             // 
             this.radioButtonRequested.AutoSize = true;
-            this.radioButtonRequested.Location = new System.Drawing.Point(18, 79);
+            this.radioButtonRequested.Location = new System.Drawing.Point(9, 41);
+            this.radioButtonRequested.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonRequested.Name = "radioButtonRequested";
-            this.radioButtonRequested.Size = new System.Drawing.Size(206, 29);
+            this.radioButtonRequested.Size = new System.Drawing.Size(108, 17);
             this.radioButtonRequested.TabIndex = 2;
             this.radioButtonRequested.TabStop = true;
             this.radioButtonRequested.Text = "Запрашиваемая";
@@ -140,9 +150,10 @@
             // radioButtonDeductible
             // 
             this.radioButtonDeductible.AutoSize = true;
-            this.radioButtonDeductible.Location = new System.Drawing.Point(18, 43);
+            this.radioButtonDeductible.Location = new System.Drawing.Point(9, 22);
+            this.radioButtonDeductible.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.radioButtonDeductible.Name = "radioButtonDeductible";
-            this.radioButtonDeductible.Size = new System.Drawing.Size(157, 29);
+            this.radioButtonDeductible.Size = new System.Drawing.Size(84, 17);
             this.radioButtonDeductible.TabIndex = 1;
             this.radioButtonDeductible.TabStop = true;
             this.radioButtonDeductible.Text = "Выводимая";
@@ -152,36 +163,40 @@
             // labelQuestion
             // 
             this.labelQuestion.AutoSize = true;
-            this.labelQuestion.Location = new System.Drawing.Point(42, 372);
+            this.labelQuestion.Location = new System.Drawing.Point(21, 193);
+            this.labelQuestion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelQuestion.Name = "labelQuestion";
-            this.labelQuestion.Size = new System.Drawing.Size(157, 25);
+            this.labelQuestion.Size = new System.Drawing.Size(82, 13);
             this.labelQuestion.TabIndex = 2;
             this.labelQuestion.Text = "Текст вопроса";
             // 
             // labelDomain
             // 
             this.labelDomain.AutoSize = true;
-            this.labelDomain.Location = new System.Drawing.Point(42, 136);
+            this.labelDomain.Location = new System.Drawing.Point(21, 71);
+            this.labelDomain.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelDomain.Name = "labelDomain";
-            this.labelDomain.Size = new System.Drawing.Size(79, 25);
+            this.labelDomain.Size = new System.Drawing.Size(42, 13);
             this.labelDomain.TabIndex = 1;
             this.labelDomain.Text = "Домен";
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(42, 58);
+            this.labelName.Location = new System.Drawing.Point(21, 30);
+            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(109, 25);
+            this.labelName.Size = new System.Drawing.Size(57, 13);
             this.labelName.TabIndex = 0;
             this.labelName.Text = "Название";
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(395, 588);
+            this.buttonCancel.Location = new System.Drawing.Point(198, 306);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(155, 45);
+            this.buttonCancel.Size = new System.Drawing.Size(78, 23);
             this.buttonCancel.TabIndex = 11;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -190,9 +205,10 @@
             // buttonOk
             // 
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(181, 588);
+            this.buttonOk.Location = new System.Drawing.Point(90, 306);
+            this.buttonOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(155, 45);
+            this.buttonOk.Size = new System.Drawing.Size(78, 23);
             this.buttonOk.TabIndex = 10;
             this.buttonOk.Text = "ОК";
             this.buttonOk.UseVisualStyleBackColor = true;
@@ -200,13 +216,14 @@
             // 
             // VariableForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 662);
+            this.ClientSize = new System.Drawing.Size(346, 344);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.groupBoxMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "VariableForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

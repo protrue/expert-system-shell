@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpertSystemShell.Core;
 using ExpertSystemShell.Model;
 using ExpertSystemShell.Tools;
 
@@ -14,10 +9,8 @@ namespace ExpertSystemShell.Gui
 {
     public partial class FactForm : Form
     {
-        public IndexedList<Domain> Domains { get; set; }
-        public IndexedList<Variable> Variables { get; set; }
+        public KnowledgeBase KnowledgeBase { get; set; }
         public Fact Fact;
-
         private Fact _fact;
 
         public FactForm()
@@ -27,10 +20,7 @@ namespace ExpertSystemShell.Gui
 
         private void FactFormLoad(object sender, EventArgs e)
         {
-            if (Variables == null || Variables.Count == 0)
-                return;
-
-            foreach (var variable in Variables)
+            foreach (var variable in KnowledgeBase.Variables.Where(v => v.VariableKind == VariableKind.Deductible))
             {
                 comboBoxVariable.Items.Add(variable);
             }
@@ -89,11 +79,11 @@ namespace ExpertSystemShell.Gui
         private void ButtonAddVariableClick(object sender, EventArgs e)
         {
             var variableForm = new VariableForm();
-            variableForm.Domains = Domains;
-            variableForm.Variables = Variables;
+            variableForm.KnowledgeBase = KnowledgeBase;
             var dialogResult = variableForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
+                KnowledgeBase.Variables.Add(variableForm.Variable);
                 var addedIndex = comboBoxVariable.Items.Add(variableForm.Variable);
                 comboBoxVariable.SelectedIndex = addedIndex;
             }

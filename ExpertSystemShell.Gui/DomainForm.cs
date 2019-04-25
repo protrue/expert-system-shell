@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpertSystemShell.Core;
 using ExpertSystemShell.Model;
 using ExpertSystemShell.Tools;
 
@@ -17,7 +9,7 @@ namespace ExpertSystemShell.Gui
 {
     public partial class DomainForm : Form
     {
-        public IndexedList<Domain> Domains { get; set; }
+        public KnowledgeBase KnowledgeBase { get; set; }
         public Domain Domain { get; set; }
 
         private Domain _domain;
@@ -53,13 +45,10 @@ namespace ExpertSystemShell.Gui
 
         private void DomainFormLoad(object sender, EventArgs e)
         {
-            if (Domains == null)
-                Domains = new IndexedList<Domain>();
-
             if (Domain != null)
                 _domain = (Domain)Domain.Clone();
             else
-                _domain = new Domain($"Домен {Domains.Count + 1}");
+                _domain = new Domain($"Домен {KnowledgeBase.Domains.Count + 1}");
 
             textBoxName.Text = _domain.Name;
             textBoxName.Select();
@@ -105,24 +94,26 @@ namespace ExpertSystemShell.Gui
         {
             if (_domain.Values.Count == 0)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 MessageBox.Show("Домен должен иметь хотя бы одно значение");
                 textBoxValue.Select();
                 textBoxValue.Focus();
+                return;
             }
 
-            if (Domains.Contains(_domain) && Domain?.Index != _domain.Index)
+            if (KnowledgeBase.Domains.Contains(_domain) && Domain?.Index != _domain.Index)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 MessageBox.Show("Домен с таким именем уже есть");
                 textBoxName.Select();
                 textBoxName.Focus();
+                return;
             }
-            else
-            {
-                Domain.Name = _domain.Name;
-                Domain.Values = _domain.Values;
-            }
+
+            if (Domain == null)
+                Domain = new Domain(_domain.Name);
+            Domain.Name = _domain.Name;
+            Domain.Values = _domain.Values;
         }
 
         private void ListBoxValuesSelectedIndexChanged(object sender, EventArgs e)
@@ -152,19 +143,6 @@ namespace ExpertSystemShell.Gui
             }
         }
 
-        private void ButtonCancelClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ListBoxValuesMouseDown(object sender, MouseEventArgs e)
-        {
-            //listBoxValues.SelectedIndex = listBoxValues.IndexFromPoint(e.X, e.Y);
-
-            //if (this.listBoxValues.SelectedItem == null) return;
-            //this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
-        }
-
         private void ListBoxValuesDragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
@@ -173,14 +151,21 @@ namespace ExpertSystemShell.Gui
         private void ListBoxValuesDragDrop(object sender, DragEventArgs e)
         {
             Point point = listBoxValues.PointToClient(new Point(e.X, e.Y));
-            int insertIndex = this.listBoxValues.IndexFromPoint(point);
-            if (insertIndex < 0) insertIndex = this.listBoxValues.Items.Count - 1;
+            int insertIndex = listBoxValues.IndexFromPoint(point);
+            if (insertIndex < 0) insertIndex = listBoxValues.Items.Count - 1;
             if (insertIndex == listBoxValues.SelectedIndex) return;
             _domain.Values.Swap(listBoxValues.SelectedIndex, insertIndex);
             object data = e.Data.GetData(typeof(IndexedNamedItem));
             listBoxValues.Items.Remove(data);
             listBoxValues.Items.Insert(insertIndex, data);
             listBoxValues.SelectedIndex = insertIndex;
+        }
+
+        private void ListBoxValuesMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left) return;
+            if (listBoxValues.SelectedItem == null) return;
+            listBoxValues.DoDragDrop(listBoxValues.SelectedItem, DragDropEffects.Move);
         }
 
         private void TextBoxValueKeyDown(object sender, KeyEventArgs e)
@@ -203,21 +188,6 @@ namespace ExpertSystemShell.Gui
                 }
 
                 textBoxValue.Select();
-            }
-        }
-
-        private void listBoxValues_DragEnter(object sender, DragEventArgs e)
-        {
-            //if (this.listBoxValues.SelectedItem == null) return;
-            //this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
-        }
-
-        private void listBoxValues_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (this.listBoxValues.SelectedItem == null) return;
-                this.listBoxValues.DoDragDrop(this.listBoxValues.SelectedItem, DragDropEffects.Move);
             }
         }
     }

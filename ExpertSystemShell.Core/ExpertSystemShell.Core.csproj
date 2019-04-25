@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="ExpertSystem.cs" />
     <Compile Include="InferenceEngine.cs" />
-    <Compile Include="InferenceEngineFrame.cs" />
+    <Compile Include="InferenceContext.cs" />
+    <Compile Include="InferenceEvent.cs" />
     <Compile Include="KnowledgeBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkingMemory.cs" />

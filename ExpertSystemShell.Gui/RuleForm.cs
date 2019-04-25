@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ExpertSystemShell.Core;
 using ExpertSystemShell.Model;
-using ExpertSystemShell.Tools;
 using Rule = ExpertSystemShell.Model.Rule;
 
 namespace ExpertSystemShell.Gui
 {
     public partial class RuleForm : Form
     {
-        public IndexedList<Domain> Domains { get; set; }
+        public KnowledgeBase KnowledgeBase { get; set; }
+        
+        public Rule Rule { get; set; }
 
-        public IndexedList<Variable> Variables { get; set; }
-
-        public IndexedList<Model.Rule> Rules { get; set; }
-
-        public Model.Rule Rule { get; set; }
-
-        private Model.Rule _rule;
+        private Rule _rule;
         private bool _setNameSuccess;
 
         public RuleForm()
@@ -34,12 +23,8 @@ namespace ExpertSystemShell.Gui
 
         private void RuleFormLoad(object sender, EventArgs e)
         {
-            if (Rules == null)
-                Rules = new IndexedList<Rule>();
-
             if (Rule != null)
             {
-                //_rule = (Model.Rule) Rule.Clone();
                 _rule = new Rule(Rule.Name);
                 _rule.Name = Rule.Name;
                 _rule.Premise = Rule.Premise;
@@ -48,7 +33,7 @@ namespace ExpertSystemShell.Gui
             }
             else
             {
-                _rule = new Model.Rule($"Правило {Rules.Count + 1}");
+                _rule = new Rule($"Правило {KnowledgeBase.Rules.Count + 1}");
             }
 
             textBoxName.Text = _rule.Name;
@@ -74,9 +59,11 @@ namespace ExpertSystemShell.Gui
 
         private void ButtonOkClick(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
+
             if (_rule.Premise.Count == 0)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 MessageBox.Show("В посылке должен быть хотя бы один факт");
                 buttonAddPremise.Select();
                 buttonAddPremise.Focus();
@@ -85,20 +72,25 @@ namespace ExpertSystemShell.Gui
 
             if (_rule.Premise.Count == 0)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 MessageBox.Show("В заключении должен быть хотя бы один факт");
                 buttonAddConclusion.Select();
                 buttonAddConclusion.Focus();
                 return;
             }
 
-            if (Rules.Contains(_rule) && Rule == null)
+            if (KnowledgeBase.Rules.Contains(_rule) && Rule == null)
             {
-                this.DialogResult = DialogResult.None;
+                DialogResult = DialogResult.None;
                 MessageBox.Show("Правило с таким именем уже есть");
                 textBoxName.Focus();
                 textBoxName.Select();
                 return;
+            }
+
+            if (string.IsNullOrWhiteSpace(_rule.Reason) || richTextBoxReason.Text == Rule.ToString())
+            {
+                _rule.Reason = _rule.ToString();
             }
 
             if (Rule == null)
@@ -109,16 +101,10 @@ namespace ExpertSystemShell.Gui
             Rule.Reason = _rule.Reason;
         }
 
-        private void ButtonCancelClick(object sender, EventArgs e)
-        {
-
-        }
-
         private void ButtonAddPremiseClick(object sender, EventArgs e)
         {
             var factForm = new FactForm();
-            factForm.Variables = Variables;
-            factForm.Domains = Domains;
+            factForm.KnowledgeBase = KnowledgeBase;
             var dialogResult = factForm.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
@@ -134,13 +120,14 @@ namespace ExpertSystemShell.Gui
                     listBoxPremise.Items.Add(factForm.Fact);
                 }
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ButtonChangePremiseClick(object sender, EventArgs e)
         {
             var factForm = new FactForm();
-            factForm.Variables = Variables;
-            factForm.Domains = Domains;
+            factForm.KnowledgeBase = KnowledgeBase;
             factForm.Fact = (Fact)listBoxPremise.SelectedItem;
             var dialogResult = factForm.ShowDialog();
 
@@ -149,6 +136,8 @@ namespace ExpertSystemShell.Gui
                 _rule.Premise[listBoxPremise.SelectedIndex] = factForm.Fact;
                 listBoxPremise.Items[listBoxPremise.SelectedIndex] = factForm.Fact;
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ButtonDeletePremiseClick(object sender, EventArgs e)
@@ -160,13 +149,14 @@ namespace ExpertSystemShell.Gui
                 _rule.Premise.RemoveAt(indexToDelete);
                 listBoxPremise.Items.RemoveAt(indexToDelete);
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ButtonAddConclusionClick(object sender, EventArgs e)
         {
             var factForm = new FactForm();
-            factForm.Variables = Variables;
-            factForm.Domains = Domains;
+            factForm.KnowledgeBase = KnowledgeBase;
             var dialogResult = factForm.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
@@ -182,13 +172,14 @@ namespace ExpertSystemShell.Gui
                     listBoxConclusion.Items.Add(factForm.Fact);
                 }
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ButtonChangeConclusionClick(object sender, EventArgs e)
         {
             var factForm = new FactForm();
-            factForm.Variables = Variables;
-            factForm.Domains = Domains;
+            factForm.KnowledgeBase = KnowledgeBase;
             factForm.Fact = (Fact)listBoxConclusion.SelectedItem;
             var dialogResult = factForm.ShowDialog();
 
@@ -197,6 +188,8 @@ namespace ExpertSystemShell.Gui
                 _rule.Conclusion[listBoxConclusion.SelectedIndex] = factForm.Fact;
                 listBoxConclusion.Items[listBoxConclusion.SelectedIndex] = factForm.Fact;
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ButtonDeleteConclusionClick(object sender, EventArgs e)
@@ -208,6 +201,8 @@ namespace ExpertSystemShell.Gui
                 _rule.Conclusion.RemoveAt(indexToDelete);
                 listBoxConclusion.Items.RemoveAt(indexToDelete);
             }
+
+            richTextBoxReason.Text = _rule.Reason;
         }
 
         private void ListBoxPremiseSelectedIndexChanged(object sender, EventArgs e)

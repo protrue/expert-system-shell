@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpertSystemShell.Model;
 using ExpertSystemShell.Tools;
 
@@ -17,8 +13,10 @@ namespace ExpertSystemShell.Core
         public IndexedList<Variable> Variables { get; set; }
         public IndexedList<Domain> Domains { get; set; }
 
-        public KnowledgeBase()
+        public KnowledgeBase(string name = null)
         {
+            if (name == null) name = "New knowledge base";
+            Name = name;
             Domains = new IndexedList<Domain>();
             Variables = new IndexedList<Variable>();
             Rules = new IndexedList<Rule>();

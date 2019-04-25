@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ExpertSystemShell.Tools
 {
@@ -68,7 +65,7 @@ namespace ExpertSystemShell.Tools
 
         public void Insert(int index, T item)
         {
-            if(index < 0 || index >= Count)
+            if(index < 0 || index > Count)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
             var itemIndex = item.Index;
@@ -86,7 +83,7 @@ namespace ExpertSystemShell.Tools
 
         public bool Delete(string index)
         {
-            if(_indexes.ContainsKey(index))
+            if(!_indexes.ContainsKey(index))
                 throw new ArgumentException();
 
             var item = _indexes[index];

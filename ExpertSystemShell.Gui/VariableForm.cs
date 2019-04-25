@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExpertSystemShell.Core;
 using ExpertSystemShell.Model;
-using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Gui
 {
     public partial class VariableForm : Form
     {
-        public IndexedList<Domain> Domains { get; set; }
-        public IndexedList<Variable> Variables { get; set; }
+        public KnowledgeBase KnowledgeBase { get; set; }
         public Variable Variable { get; set; }
 
         private Variable _variable;
 
-        private bool _setNameSuccess = false;
+        private bool _setNameSuccess;
 
         public VariableForm()
         {
@@ -30,15 +22,9 @@ namespace ExpertSystemShell.Gui
 
         private void VariableFormLoad(object sender, EventArgs e)
         {
-            if (Domains == null)
-                Domains = new IndexedList<Domain>();
-
-            if (Variables == null)
-                Variables = new IndexedList<Variable>();
-
             if (Variable != null)
             {
-                _variable = new Variable(_variable.Name);
+                _variable = new Variable(Variable.Name);
                 _variable.Name = Variable.Name;
                 _variable.Domain = Variable.Domain;
                 _variable.VariableKind = Variable.VariableKind;
@@ -46,14 +32,14 @@ namespace ExpertSystemShell.Gui
             }
             else
             {
-                _variable = new Variable($"Переменная {Variables.Count + 1}", VariableKind.Deductible);
+                _variable = new Variable($"Переменная {KnowledgeBase.Variables.Count + 1}", VariableKind.Deductible);
             }
 
             textBoxName.Text = _variable.Name;
             textBoxName.Select();
             textBoxName.Focus();
 
-            foreach (var domain in Domains)
+            foreach (var domain in KnowledgeBase.Domains)
                 comboBoxDomain.Items.Add(domain);
 
             if (comboBoxDomain.Items.Count > 0 && Variable == null)
@@ -67,22 +53,45 @@ namespace ExpertSystemShell.Gui
 
         private void ButtonOkClick(object sender, EventArgs e)
         {
-            if (Variables.Contains(_variable) && Variable == null)
+            DialogResult = DialogResult.OK;
+
+            if (_variable.VariableKind == VariableKind.Requested)
+            {
+                var usedByRules =
+                    KnowledgeBase
+                        .Rules
+                        .Where(r => r.Conclusion.Count(f => f.Variable == _variable) > 0)
+                        .Select(r => r.Name)
+                        .ToArray();
+
+                if (usedByRules.Length > 0)
+                {
+                    DialogResult = DialogResult.None;
+                    MessageBox.Show($"Невозможно изменить тип переменной, так как она используется в заключении правил:{Environment.NewLine}{string.Join(Environment.NewLine, usedByRules)}");
+                    return;
+                }
+            }
+
+            if (KnowledgeBase.Variables.Contains(_variable) && Variable == null)
             {
                 this.DialogResult = DialogResult.None;
                 MessageBox.Show("Переменная с таким именем уже есть");
                 textBoxName.Focus();
                 textBoxName.Select();
+                return;
             }
-            else
-            {
-                if (Variable == null)
-                    Variable = new Variable(_variable.Name);
 
-                Variable.Domain = _variable.Domain;
-                Variable.VariableKind = _variable.VariableKind;
-                Variable.Question = _variable.Question;
+            if (string.IsNullOrWhiteSpace(richTextBoxQuestion.Text) || richTextBoxQuestion.Text == Variable?.GenerateQuestion())
+            {
+                _variable.Question = _variable.GenerateQuestion();
             }
+
+            if (Variable == null)
+                Variable = new Variable(_variable.Name);
+
+            Variable.Domain = _variable.Domain;
+            Variable.VariableKind = _variable.VariableKind;
+            Variable.Question = _variable.Question;
         }
 
         private void ButtonCancelClick(object sender, EventArgs e)
@@ -115,11 +124,11 @@ namespace ExpertSystemShell.Gui
         private void ButtonAddDomainClick(object sender, EventArgs e)
         {
             var domainForm = new DomainForm();
-            domainForm.Domains = Domains;
+            domainForm.KnowledgeBase = KnowledgeBase;
             var dialogResult = domainForm.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                Domains.Add(domainForm.Domain);
+                KnowledgeBase.Domains.Add(domainForm.Domain);
                 comboBoxDomain.Items.Add(domainForm.Domain);
                 comboBoxDomain.SelectedItem = domainForm.Domain;
             }

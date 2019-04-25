@@ -71,10 +71,8 @@
             this.listBoxValues.TabIndex = 2;
             this.listBoxValues.SelectedIndexChanged += new System.EventHandler(this.ListBoxValuesSelectedIndexChanged);
             this.listBoxValues.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragDrop);
-            this.listBoxValues.DragEnter += new System.Windows.Forms.DragEventHandler(this.listBoxValues_DragEnter);
             this.listBoxValues.DragOver += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragOver);
-            this.listBoxValues.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListBoxValuesMouseDown);
-            this.listBoxValues.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBoxValues_MouseMove);
+            this.listBoxValues.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ListBoxValuesMouseMove);
             // 
             // textBoxName
             // 
@@ -143,7 +141,6 @@
             this.buttonCancel.TabIndex = 9;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.ButtonCancelClick);
             // 
             // groupBox
             // 

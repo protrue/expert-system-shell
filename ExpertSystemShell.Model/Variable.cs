@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
@@ -16,7 +12,7 @@ namespace ExpertSystemShell.Model
         public Domain Domain { get; set; }
         public string Question
         {
-            get => string.IsNullOrWhiteSpace(_question) ? $"{Name}?" : _question;
+            get => VariableKind == VariableKind.Deductible ? string.Empty : _question;
             set => _question = value;
         }
 
@@ -26,6 +22,8 @@ namespace ExpertSystemShell.Model
             Domain = domain;
             Question = question;
         }
+
+        public string GenerateQuestion() => $"{Name}?";
 
         public override object Clone()
         {

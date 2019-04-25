@@ -53,5 +53,18 @@ namespace ExpertSystemShell.Tools
 
             return false;
         }
+
+        public static bool operator ==(IndexedNamedItem first, IndexedNamedItem second)
+        {
+            //if (first == null || second == null)
+//                return false;
+
+            return first?.Index == second?.Index;
+        }
+
+        public static bool operator !=(IndexedNamedItem first, IndexedNamedItem second)
+        {
+            return !(first == second);
+        }
     }
 }

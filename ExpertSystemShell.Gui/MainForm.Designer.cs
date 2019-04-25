@@ -31,11 +31,12 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.консультацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showLastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.groupBoxOperations = new System.Windows.Forms.GroupBox();
             this.tlpSide = new System.Windows.Forms.TableLayoutPanel();
@@ -52,8 +53,6 @@
             this.listView = new System.Windows.Forms.ListView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tlpMain.SuspendLayout();
             this.groupBoxOperations.SuspendLayout();
@@ -67,10 +66,10 @@
             // statusStrip
             // 
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip.Location = new System.Drawing.Point(0, 844);
+            this.statusStrip.Location = new System.Drawing.Point(0, 539);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1606, 22);
+            this.statusStrip.Size = new System.Drawing.Size(784, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -82,7 +81,7 @@
             this.консультацияToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1606, 24);
+            this.menuStrip.Size = new System.Drawing.Size(784, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -97,12 +96,12 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.fileToolStripMenuItem.Text = "Файл";
             // 
-            // saveToolStripMenuItem
+            // createToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.saveToolStripMenuItem.Text = "Сохранить";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
+            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.createToolStripMenuItem.Text = "Создать";
+            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItemClick);
             // 
             // openToolStripMenuItem
             // 
@@ -111,11 +110,24 @@
             this.openToolStripMenuItem.Text = "Открыть";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveToolStripMenuItem.Text = "Сохранить";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.saveAsToolStripMenuItem.Text = "Сохранить как...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
+            // 
             // консультацияToolStripMenuItem
             // 
             this.консультацияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startToolStripMenuItem,
-            this.showLastToolStripMenuItem});
+            this.startToolStripMenuItem});
             this.консультацияToolStripMenuItem.Name = "консультацияToolStripMenuItem";
             this.консультацияToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
             this.консультацияToolStripMenuItem.Text = "Консультация";
@@ -123,21 +135,15 @@
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.startToolStripMenuItem.Text = "Начать";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.ConsultToolStripMenuItemClick);
-            // 
-            // showLastToolStripMenuItem
-            // 
-            this.showLastToolStripMenuItem.Name = "showLastToolStripMenuItem";
-            this.showLastToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.showLastToolStripMenuItem.Text = "Просмотреть последнюю";
             // 
             // tlpMain
             // 
             this.tlpMain.ColumnCount = 2;
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tlpMain.Controls.Add(this.groupBoxOperations, 1, 0);
             this.tlpMain.Controls.Add(this.groupBoxListView, 0, 0);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -145,16 +151,16 @@
             this.tlpMain.Name = "tlpMain";
             this.tlpMain.RowCount = 1;
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpMain.Size = new System.Drawing.Size(1606, 820);
+            this.tlpMain.Size = new System.Drawing.Size(784, 515);
             this.tlpMain.TabIndex = 2;
             // 
             // groupBoxOperations
             // 
             this.groupBoxOperations.Controls.Add(this.tlpSide);
             this.groupBoxOperations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxOperations.Location = new System.Drawing.Point(1287, 3);
+            this.groupBoxOperations.Location = new System.Drawing.Point(587, 3);
             this.groupBoxOperations.Name = "groupBoxOperations";
-            this.groupBoxOperations.Size = new System.Drawing.Size(316, 814);
+            this.groupBoxOperations.Size = new System.Drawing.Size(194, 509);
             this.groupBoxOperations.TabIndex = 0;
             this.groupBoxOperations.TabStop = false;
             // 
@@ -168,10 +174,10 @@
             this.tlpSide.Location = new System.Drawing.Point(3, 16);
             this.tlpSide.Name = "tlpSide";
             this.tlpSide.RowCount = 3;
-            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSide.Size = new System.Drawing.Size(310, 795);
+            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tlpSide.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpSide.Size = new System.Drawing.Size(188, 490);
             this.tlpSide.TabIndex = 0;
             // 
             // groupBoxMode
@@ -180,7 +186,7 @@
             this.groupBoxMode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMode.Location = new System.Drawing.Point(3, 3);
             this.groupBoxMode.Name = "groupBoxMode";
-            this.groupBoxMode.Size = new System.Drawing.Size(304, 259);
+            this.groupBoxMode.Size = new System.Drawing.Size(182, 144);
             this.groupBoxMode.TabIndex = 0;
             this.groupBoxMode.TabStop = false;
             // 
@@ -198,7 +204,7 @@
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tlpSwitch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tlpSwitch.Size = new System.Drawing.Size(298, 240);
+            this.tlpSwitch.Size = new System.Drawing.Size(176, 125);
             this.tlpSwitch.TabIndex = 0;
             // 
             // radioButtonDomains
@@ -216,7 +222,7 @@
             // radioButtonVariables
             // 
             this.radioButtonVariables.AutoSize = true;
-            this.radioButtonVariables.Location = new System.Drawing.Point(3, 83);
+            this.radioButtonVariables.Location = new System.Drawing.Point(3, 44);
             this.radioButtonVariables.Name = "radioButtonVariables";
             this.radioButtonVariables.Size = new System.Drawing.Size(91, 17);
             this.radioButtonVariables.TabIndex = 1;
@@ -228,7 +234,7 @@
             // radioButtonRules
             // 
             this.radioButtonRules.AutoSize = true;
-            this.radioButtonRules.Location = new System.Drawing.Point(3, 163);
+            this.radioButtonRules.Location = new System.Drawing.Point(3, 85);
             this.radioButtonRules.Name = "radioButtonRules";
             this.radioButtonRules.Size = new System.Drawing.Size(69, 17);
             this.radioButtonRules.TabIndex = 2;
@@ -245,21 +251,21 @@
             this.tableLayoutPanelButtons.Controls.Add(this.buttonEdit, 0, 1);
             this.tableLayoutPanelButtons.Controls.Add(this.buttonDelete, 0, 2);
             this.tableLayoutPanelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 268);
+            this.tableLayoutPanelButtons.Location = new System.Drawing.Point(3, 153);
             this.tableLayoutPanelButtons.Name = "tableLayoutPanelButtons";
             this.tableLayoutPanelButtons.RowCount = 3;
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(304, 259);
+            this.tableLayoutPanelButtons.Size = new System.Drawing.Size(182, 144);
             this.tableLayoutPanelButtons.TabIndex = 1;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAdd.Location = new System.Drawing.Point(3, 3);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(298, 50);
+            this.buttonAdd.Size = new System.Drawing.Size(176, 42);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -267,10 +273,10 @@
             // 
             // buttonEdit
             // 
-            this.buttonEdit.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonEdit.Location = new System.Drawing.Point(3, 89);
+            this.buttonEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonEdit.Location = new System.Drawing.Point(3, 51);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(298, 50);
+            this.buttonEdit.Size = new System.Drawing.Size(176, 42);
             this.buttonEdit.TabIndex = 1;
             this.buttonEdit.Text = "Изменить";
             this.buttonEdit.UseVisualStyleBackColor = true;
@@ -278,10 +284,10 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonDelete.Location = new System.Drawing.Point(3, 175);
+            this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonDelete.Location = new System.Drawing.Point(3, 99);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(298, 50);
+            this.buttonDelete.Size = new System.Drawing.Size(176, 42);
             this.buttonDelete.TabIndex = 2;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.UseVisualStyleBackColor = true;
@@ -293,7 +299,7 @@
             this.groupBoxListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxListView.Location = new System.Drawing.Point(3, 3);
             this.groupBoxListView.Name = "groupBoxListView";
-            this.groupBoxListView.Size = new System.Drawing.Size(1278, 814);
+            this.groupBoxListView.Size = new System.Drawing.Size(578, 509);
             this.groupBoxListView.TabIndex = 1;
             this.groupBoxListView.TabStop = false;
             // 
@@ -306,16 +312,14 @@
             this.listView.HideSelection = false;
             this.listView.Location = new System.Drawing.Point(3, 16);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(1272, 795);
+            this.listView.Size = new System.Drawing.Size(572, 490);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             this.listView.SelectedIndexChanged += new System.EventHandler(this.ListViewSelectedIndexChanged);
             this.listView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragDrop);
             this.listView.DragOver += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragOver);
-            this.listView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseDown);
             this.listView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseMove);
-            this.listView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseUp);
             // 
             // openFileDialog
             // 
@@ -331,32 +335,20 @@
             this.saveFileDialog.Filter = "Файл базы знаний|*.kb";
             this.saveFileDialog.RestoreDirectory = true;
             // 
-            // createToolStripMenuItem
-            // 
-            this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.createToolStripMenuItem.Text = "Создать";
-            this.createToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItemClick);
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.saveAsToolStripMenuItem.Text = "Сохранить как...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItemClick);
-            // 
             // MainForm
             // 
-            this.ClientSize = new System.Drawing.Size(1606, 866);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.tlpMain);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Оболочка экспертной системы";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
+            this.Resize += new System.EventHandler(this.MainFormResize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.tlpMain.ResumeLayout(false);
@@ -397,7 +389,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.ToolStripMenuItem консультацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showLastToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ExpertSystemShell.Model;
 
@@ -9,98 +8,177 @@ namespace ExpertSystemShell.Core
 {
     public class InferenceEngine
     {
-        public Fact Deduce(List<Rule> rules, Func<Variable, Task<Fact>> variableRequester, Variable goal)
+        public KnowledgeBase KnowledgeBase { get; set; }
+        public WorkingMemory WorkingMemory { get; set; }
+        public Func<Variable, Task<Fact>> VariableRequester { get; set; }
+
+        public event Action<Fact> DeduceEnded;
+
+        public InferenceEngine(KnowledgeBase knowledgeBase, Func<Variable, Task<Fact>> variableRequester)
         {
-            var goalsStack = new Stack<Variable>();
-            goalsStack.Push(goal);
-            var currentGoal = goal;
-            var currentRules = new Queue<Rule>();
-            Rule currentRule = null;
-            var factsToDeduce = new Queue<Fact>();
-            Fact factToDeduce;
-            var deducedFacts = new List<Fact>();
-            var isRuleFired = true;
+            KnowledgeBase = knowledgeBase;
+            VariableRequester = variableRequester;
 
-            while(goalsStack.Count != 0)
+            WorkingMemory = new WorkingMemory();
+        }
+
+        private Queue<Rule> GetRulesToDeduceVariable(Variable variable)
+        {
+            var result = new Queue<Rule>();
+
+            foreach (var rule in KnowledgeBase.Rules)
             {
-                if(currentRules.Count == 0)
+                foreach (var fact in rule.Conclusion)
                 {
-                    currentGoal = goalsStack.Pop();
-
-                    foreach(var rule in rules)
+                    if (Equals(fact.Variable, variable))
                     {
-                        foreach(var fact in rule.Conclusion)
-                        {
-                            if(fact.Variable == currentGoal)
-                            {
-                                currentRules.Enqueue(rule);
-                                break;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if(factsToDeduce.Count == 0)
-                    {
-                        if(isRuleFired)
-                        {
-                            foreach(var fact in currentRule.Conclusion)
-                            {
-                                deducedFacts.Add(fact);
-                            }
-                        }
-
-                        currentRule = currentRules.Dequeue();
-                        foreach(var fact in currentRule.Premise)
-                        {
-                            factsToDeduce.Enqueue(fact);
-                        }
-
-                        isRuleFired = true;
-                    }
-                    else
-                    {
-                        factToDeduce = factsToDeduce.Dequeue();
-                        currentGoal = factToDeduce.Variable;
-
-                        switch(currentGoal.VariableKind)
-                        {
-                            case VariableKind.Requested:
-                                var answerTask = variableRequester.Invoke(currentGoal);
-                                answerTask.RunSynchronously();
-                                deducedFacts.Add(answerTask.Result);
-                                break;
-                            case VariableKind.Deductible:
-                                var deducedFactForCurrentGoal = deducedFacts.FirstOrDefault(f => f.Variable == currentGoal);
-                                if(deducedFactForCurrentGoal != null)
-                                {
-                                    if(factToDeduce.Value != deducedFactForCurrentGoal.Value)
-                                    {
-                                        currentRule = null;
-                                        factToDeduce = null;
-                                        factsToDeduce.Clear();
-                                        isRuleFired = false;
-                                    }
-                                }
-                                else
-                                {
-                                    goalsStack.Push(factToDeduce.Variable);
-                                    currentRules.Clear();
-                                    factsToDeduce.Clear();
-                                    isRuleFired = false;
-                                }
-                                break;
-                            case VariableKind.DeductibleRequested:
-                                break;
-                            default:
-                                break;
-                        }
+                        result.Enqueue(rule);
+                        break;
                     }
                 }
             }
 
-            return deducedFacts.FirstOrDefault(f => f.Variable == goal);
+            return result;
+        }
+
+        private void RequestVariable(InferenceContext context)
+        {
+            var requestTask = VariableRequester.Invoke(context.Goal);
+            var configuredTaskAwaitable = requestTask.ConfigureAwait(true);
+            var configuredTaskAwaiter = configuredTaskAwaitable.GetAwaiter();
+            var answerFact = configuredTaskAwaiter.GetResult();
+            context.Resolved.Add(answerFact);
+            context.Result = answerFact;
+            WorkingMemory.ResolvedFacts.Add(answerFact);
+            WorkingMemory.Log(answerFact, true);
+        }
+
+        public Fact Deduce(Variable goal)
+        {
+            WorkingMemory = new WorkingMemory { Goal = goal };
+            var context = new InferenceContext()
+            {
+                Goal = goal,
+                RulesToDeduce = GetRulesToDeduceVariable(goal),
+            };
+            WorkingMemory.InferenceStack.Push(context);
+            WorkingMemory.Log(goal);
+
+            while (WorkingMemory.InferenceStack.Count > 0)
+            {
+                context = WorkingMemory.InferenceStack.Pop();
+
+                if (context.Goal.VariableKind == VariableKind.Requested)
+                {
+                    RequestVariable(context);
+                    continue;
+                }
+
+                //if (context.RuleToDeduce == null)
+                //{
+                //    if (context.RulesToDeduce.Count == 0)
+                //    {
+                //        if (context.Result == null && WorkingMemory.InferenceStack.Count > 0)
+                //        {
+                //            WorkingMemory.InferenceStack.Peek().RuleToDeduce = null;
+                //            WorkingMemory.InferenceStack.Peek().FactToCheck = null;
+                //        }
+
+                //        continue;
+                //    }
+
+                //    context.RuleToDeduce = context.RulesToDeduce.Dequeue();
+                //    WorkingMemory.TriggeredRules.Add(context.RuleToDeduce);
+                //    WorkingMemory.Log(context.RuleToDeduce);
+                //}
+
+                //if (context.FactsToCheck.Count == 0)
+                //{
+
+                //    context.FactsToCheck = new Queue<Fact>(context.RuleToDeduce.Premise);
+                //}
+                //context.FactToCheck = context.FactsToCheck.Dequeue();
+
+                if (context.FactsToCheck.Count > 0)
+                {
+                    context.FactToCheck = context.FactsToCheck.Pop();
+                }
+                else
+                {
+                    if (context.RulesToDeduce.Count > 0)
+                    {
+                        context.RuleToDeduce = context.RulesToDeduce.Dequeue();
+                        context.FactsToCheck = new Stack<Fact>(context.RuleToDeduce.Premise);
+                        context.FactToCheck = context.FactsToCheck.Pop();
+
+                        WorkingMemory.TriggeredRules.Add(context.RuleToDeduce);
+                        WorkingMemory.Log(context.RuleToDeduce);
+                    }
+                    else
+                    {
+                        if (WorkingMemory.InferenceStack.Count > 0)
+                        {
+                            WorkingMemory.InferenceStack.Peek().FactsToCheck.Pop();
+                        }
+
+                        continue;
+                    }
+                }
+
+                var resolvedFact =
+                    WorkingMemory
+                        .ResolvedFacts
+                        .FirstOrDefault(f => f.Variable == context.FactToCheck.Variable);
+
+                if (resolvedFact == null)
+                {
+                    var newContext = new InferenceContext()
+                    {
+                        Goal = context.FactToCheck.Variable,
+                        RulesToDeduce = GetRulesToDeduceVariable(context.FactToCheck.Variable),
+                    };
+
+                    context.FactsToCheck.Push(context.FactToCheck);
+                    WorkingMemory.InferenceStack.Push(context);
+                    WorkingMemory.InferenceStack.Push(newContext);
+                    WorkingMemory.Log(newContext.Goal);
+                }
+                else
+                {
+                    if (resolvedFact.Value == context.FactToCheck.Value)
+                    {
+                        if (context.FactsToCheck.Count == 0)
+                        {
+                            var resolved = context.RuleToDeduce.Conclusion;
+                            context.Resolved.AddRange(resolved);
+                            context.Result = resolved.FirstOrDefault(f => f.Variable == context.Goal);
+                            WorkingMemory.FiredRules.Add(context.RuleToDeduce);
+                            WorkingMemory.ResolvedFacts.AddRange(resolved);
+                            WorkingMemory.Log(context.RuleToDeduce, true);
+                            WorkingMemory.Log(resolved);
+                            context.RuleToDeduce = null;
+                        }
+                        else
+                        {
+                            WorkingMemory.InferenceStack.Push(context);
+                        }
+
+                        context.FactToCheck = null;
+                    }
+                    else
+                    {
+                        context.FactToCheck = null;
+                        context.RuleToDeduce = null;
+
+                        WorkingMemory.InferenceStack.Push(context);
+                    }
+                }
+            }
+
+            DeduceEnded?.Invoke(context.Result);
+            WorkingMemory.Result = context.Result;
+
+            return WorkingMemory.Result;
         }
     }
 }

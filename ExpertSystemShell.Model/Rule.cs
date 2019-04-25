@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ExpertSystemShell.Tools;
 
 namespace ExpertSystemShell.Model
@@ -10,23 +7,24 @@ namespace ExpertSystemShell.Model
     [Serializable]
     public class Rule : IndexedNamedItem, ICloneable
     {
-        public string Reason { get; set; }
         public List<Fact> Premise { get; set; }
         public List<Fact> Conclusion { get; set; }
 
+        public string Reason { get; set; }
+
         public Rule(string name, IEnumerable<Fact> premise = null, IEnumerable<Fact> conclusion = null, string reason = null) : base(name)
         {
-            if (premise != null)
-                Premise = new List<Fact>(premise);
-            else
-                Premise = new List<Fact>();
-
-            if (conclusion != null)
-                Conclusion = new List<Fact>(conclusion);
-            else
-                Conclusion = new List<Fact>();
-
+            Premise = premise != null ? new List<Fact>(premise) : new List<Fact>();
+            Conclusion = conclusion != null ? new List<Fact>(conclusion) : new List<Fact>();
             Reason = reason;
+        }
+
+        public override string ToString()
+        {
+            if (Premise.Count == 0 || Conclusion.Count == 0)
+                return string.Empty;
+
+            return $"Если {string.Join(" И ", Premise)}, то {string.Join(", ", Conclusion)}";
         }
 
         public override object Clone()
