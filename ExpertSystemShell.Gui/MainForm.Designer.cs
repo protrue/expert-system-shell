@@ -135,7 +135,7 @@ namespace ExpertSystemShell.Gui
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.startToolStripMenuItem.Text = "Начать";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.ConsultToolStripMenuItemClick);
             // 
@@ -319,6 +319,7 @@ namespace ExpertSystemShell.Gui
             this.listView.SelectedIndexChanged += new System.EventHandler(this.ListViewSelectedIndexChanged);
             this.listView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragDrop);
             this.listView.DragOver += new System.Windows.Forms.DragEventHandler(this.ListBoxValuesDragOver);
+            this.listView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseDown);
             this.listView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseMove);
             // 
             // openFileDialog

@@ -8,6 +8,7 @@ namespace ExpertSystemShell.Core
 {
     public class InferenceEngine
     {
+        public const int MaxTriggeredRules = 1000000;
         public KnowledgeBase KnowledgeBase { get; set; }
         public WorkingMemory WorkingMemory { get; set; }
         public Func<Variable, Task<Fact>> VariableRequester { get; set; }
@@ -66,6 +67,12 @@ namespace ExpertSystemShell.Core
 
             while (WorkingMemory.InferenceStack.Count > 0)
             {
+                if (WorkingMemory.TriggeredRules.Count > MaxTriggeredRules)
+                {
+                    WorkingMemory.Log("Превышен лимит попыток вывода правил");
+                    break;
+                }
+
                 context = WorkingMemory.InferenceStack.Pop();
 
                 if (context.Goal.VariableKind == VariableKind.Requested)

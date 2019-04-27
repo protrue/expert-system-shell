@@ -46,7 +46,19 @@ namespace ExpertSystemShell.Gui
                 comboBoxDomain.SelectedIndex = 0;
 
             comboBoxDomain.SelectedItem = _variable.Domain;
-            radioButtonDeductible.Checked = true;
+
+            switch (_variable.VariableKind)
+            {
+                case VariableKind.Deductible:
+                    radioButtonDeductible.Checked = true;
+                    break;
+                case VariableKind.Requested:
+                    radioButtonRequested.Checked = true;
+                    break;
+                case VariableKind.DeductibleRequested:
+                    radioButtonDeductibleRequested.Checked = true;
+                    break;
+            }
 
             richTextBoxQuestion.Text = _variable.Question;
         }
@@ -54,6 +66,13 @@ namespace ExpertSystemShell.Gui
         private void ButtonOkClick(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+
+            if (_variable.Domain == null)
+            {
+                MessageBox.Show("У переменной должен быть указан домен");
+                DialogResult = DialogResult.None;
+                return;
+            }
 
             if (_variable.VariableKind == VariableKind.Requested)
             {
@@ -72,7 +91,7 @@ namespace ExpertSystemShell.Gui
                 }
             }
 
-            if (KnowledgeBase.Variables.Contains(_variable) && Variable == null)
+            if (KnowledgeBase.Variables.Contains(_variable) && Variable?.Index != _variable.Index)
             {
                 this.DialogResult = DialogResult.None;
                 MessageBox.Show("Переменная с таким именем уже есть");
@@ -89,6 +108,7 @@ namespace ExpertSystemShell.Gui
             if (Variable == null)
                 Variable = new Variable(_variable.Name);
 
+            Variable.Name = _variable.Name;
             Variable.Domain = _variable.Domain;
             Variable.VariableKind = _variable.VariableKind;
             Variable.Question = _variable.Question;
@@ -140,18 +160,21 @@ namespace ExpertSystemShell.Gui
             {
                 _variable.VariableKind = VariableKind.Deductible;
                 richTextBoxQuestion.Enabled = false;
+                return;
             }
 
             if (radioButtonRequested.Checked)
             {
                 _variable.VariableKind = VariableKind.Requested;
                 richTextBoxQuestion.Enabled = true;
+                return;
             }
 
             if (radioButtonDeductibleRequested.Checked)
             {
                 _variable.VariableKind = VariableKind.DeductibleRequested;
                 richTextBoxQuestion.Enabled = true;
+                return;
             }
         }
 

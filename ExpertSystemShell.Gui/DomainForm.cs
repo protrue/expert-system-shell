@@ -46,7 +46,7 @@ namespace ExpertSystemShell.Gui
         private void DomainFormLoad(object sender, EventArgs e)
         {
             if (Domain != null)
-                _domain = (Domain)Domain.Clone();
+                _domain = new Domain(Domain.Name, Domain.Values);
             else
                 _domain = new Domain($"Домен {KnowledgeBase.Domains.Count + 1}");
 
@@ -85,9 +85,10 @@ namespace ExpertSystemShell.Gui
 
         private void ButtonDeleteClick(object sender, EventArgs e)
         {
-            var selectedIndex = listBoxValues.SelectedIndex;
-            Domain.Values.Delete(selectedIndex);
-            listBoxValues.Items.RemoveAt(selectedIndex);
+            var selectedItem = (IndexedNamedItem)listBoxValues.SelectedItem;
+            if (selectedItem == null) return;
+            _domain.Values.Delete(selectedItem);
+            listBoxValues.Items.Remove(selectedItem);
         }
 
         private void ButtonOkClick(object sender, EventArgs e)
@@ -112,6 +113,7 @@ namespace ExpertSystemShell.Gui
 
             if (Domain == null)
                 Domain = new Domain(_domain.Name);
+
             Domain.Name = _domain.Name;
             Domain.Values = _domain.Values;
         }

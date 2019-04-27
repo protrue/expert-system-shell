@@ -46,10 +46,16 @@ namespace ExpertSystemShell.Tools
 
         private void UpdateIndex(string oldName, string newName)
         {
-            var index = oldName.GetIndex();
-            var item = _indexes[index];
-            _indexes.Remove(index);
-            _indexes[newName.GetIndex()] = item;
+            if (oldName == newName)
+                return;
+
+            var oldIndex = oldName.GetIndex();
+            var oldItem = _indexes[oldIndex];
+            _indexes.Remove(oldIndex);
+            var newIndex = newName.GetIndex();
+            if (_indexes.ContainsKey(newIndex))
+                throw new ArgumentException();
+            _indexes[newIndex] = oldItem;
         }
 
         public void Add(T item)

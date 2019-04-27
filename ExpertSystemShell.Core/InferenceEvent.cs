@@ -15,5 +15,7 @@ namespace ExpertSystemShell.Core
         public bool IsFactRequested { get; set; }
 
         public Fact Fact { get; set; }
+
+        public string Text { get; set; }
     }
 }

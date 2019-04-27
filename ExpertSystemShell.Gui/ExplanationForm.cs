@@ -27,6 +27,11 @@ namespace ExpertSystemShell.Gui
         {
             foreach (var inferenceEvent in WorkingMemory.InferenceHistory)
             {
+                if (!string.IsNullOrWhiteSpace(inferenceEvent.Text))
+                {
+                    treeViewTrace.Nodes.Add(inferenceEvent.Text);
+                }
+
                 if (inferenceEvent.Goal != null && radioButtonTraceAll.Checked)
                 {
                     treeViewTrace.Nodes.Add($"Цель: {inferenceEvent.Goal}");

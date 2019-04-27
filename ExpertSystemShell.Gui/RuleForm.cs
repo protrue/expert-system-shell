@@ -79,7 +79,7 @@ namespace ExpertSystemShell.Gui
                 return;
             }
 
-            if (KnowledgeBase.Rules.Contains(_rule) && Rule == null)
+            if (KnowledgeBase.Rules.Contains(_rule) && Rule?.Index != _rule.Index)
             {
                 DialogResult = DialogResult.None;
                 MessageBox.Show("Правило с таким именем уже есть");
@@ -96,6 +96,7 @@ namespace ExpertSystemShell.Gui
             if (Rule == null)
                 Rule = new Rule(_rule.Name);
 
+            Rule.Name = _rule.Name;
             Rule.Premise = _rule.Premise;
             Rule.Conclusion = _rule.Conclusion;
             Rule.Reason = _rule.Reason;
@@ -105,6 +106,7 @@ namespace ExpertSystemShell.Gui
         {
             var factForm = new FactForm();
             factForm.KnowledgeBase = KnowledgeBase;
+            factForm.IsConclusion = false;
             var dialogResult = factForm.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
@@ -128,6 +130,7 @@ namespace ExpertSystemShell.Gui
         {
             var factForm = new FactForm();
             factForm.KnowledgeBase = KnowledgeBase;
+            factForm.IsConclusion = false;
             factForm.Fact = (Fact)listBoxPremise.SelectedItem;
             var dialogResult = factForm.ShowDialog();
 
@@ -157,6 +160,7 @@ namespace ExpertSystemShell.Gui
         {
             var factForm = new FactForm();
             factForm.KnowledgeBase = KnowledgeBase;
+            factForm.IsConclusion = true;
             var dialogResult = factForm.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
@@ -180,6 +184,7 @@ namespace ExpertSystemShell.Gui
         {
             var factForm = new FactForm();
             factForm.KnowledgeBase = KnowledgeBase;
+            factForm.IsConclusion = true;
             factForm.Fact = (Fact)listBoxConclusion.SelectedItem;
             var dialogResult = factForm.ShowDialog();
 

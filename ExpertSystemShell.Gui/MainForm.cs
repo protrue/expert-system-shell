@@ -406,12 +406,9 @@ namespace ExpertSystemShell.Gui
         {
             if (e.Button == MouseButtons.Left)
             {
-                _draggedItem = listView.GetItemAt(e.X, e.Y);
-
                 if (_draggedItem == null)
                     return;
 
-                _draggedIndex = listView.Items.IndexOf(_draggedItem);
                 listView.DoDragDrop(_draggedItem, DragDropEffects.Move);
             }
         }
@@ -444,11 +441,25 @@ namespace ExpertSystemShell.Gui
                 KnowledgeBase.Rules.Swap(_draggedIndex, insertIndex);
             }
 
-            var draggedItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
+            _draggedItem = (ListViewItem)e.Data.GetData(typeof(ListViewItem));
             listView.Items.Remove(_draggedItem);
             listView.Items.Insert(insertIndex, _draggedItem);
 
             dragDropDone = true;
+        }
+
+        private void ListViewMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _draggedItem = listView.GetItemAt(e.X, e.Y);
+
+                if (_draggedItem == null)
+                    return;
+
+                _draggedIndex = listView.Items.IndexOf(_draggedItem);
+                
+            }
         }
 
         private void LoadKnowledgeBase(string path)
@@ -541,5 +552,7 @@ namespace ExpertSystemShell.Gui
         {
             SetColumnsSize();
         }
+
+        
     }
 }

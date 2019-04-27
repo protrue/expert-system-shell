@@ -11,6 +11,7 @@ namespace ExpertSystemShell.Gui
     {
         public KnowledgeBase KnowledgeBase { get; set; }
         public Fact Fact;
+        public bool IsConclusion { get; set; }
         private Fact _fact;
 
         public FactForm()
@@ -20,7 +21,7 @@ namespace ExpertSystemShell.Gui
 
         private void FactFormLoad(object sender, EventArgs e)
         {
-            foreach (var variable in KnowledgeBase.Variables.Where(v => v.VariableKind == VariableKind.Deductible))
+            foreach (var variable in KnowledgeBase.Variables.Where(v => IsConclusion && v.VariableKind == VariableKind.Deductible || !IsConclusion))
             {
                 comboBoxVariable.Items.Add(variable);
             }
@@ -84,8 +85,11 @@ namespace ExpertSystemShell.Gui
             if (dialogResult == DialogResult.OK)
             {
                 KnowledgeBase.Variables.Add(variableForm.Variable);
-                var addedIndex = comboBoxVariable.Items.Add(variableForm.Variable);
-                comboBoxVariable.SelectedIndex = addedIndex;
+                if (variableForm.Variable.VariableKind != VariableKind.Requested && IsConclusion || !IsConclusion)
+                {
+                    var addedIndex = comboBoxVariable.Items.Add(variableForm.Variable);
+                    comboBoxVariable.SelectedIndex = addedIndex;
+                }
             }
         }
     }

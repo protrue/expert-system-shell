@@ -42,5 +42,8 @@ namespace ExpertSystemShell.Core
 
         public void Log(Rule rule, bool isFired = false) =>
             InferenceHistory.Add(new InferenceEvent() { Rule = rule, IsRuleFired = isFired });
+
+        public void Log(string text) =>
+            InferenceHistory.Add(new InferenceEvent() { Text = text });
     }
 }
