@@ -1,4 +1,4 @@
-﻿namespace ExpertSystemShell.Gui
+namespace ExpertSystemShell.Gui
 {
     partial class MainForm
     {
